@@ -12,6 +12,9 @@ import {AboutComponent} from './components/about/about.component';
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 
+//Services
+import {MeasuresService} from "./services/measures.service";
+
 
 @NgModule({
     declarations: [
@@ -28,7 +31,7 @@ import {HttpClientModule} from "@angular/common/http";
         HttpClientModule,
         APP_ROUTING
     ],
-    providers: [],
+    providers: [MeasuresService],
     bootstrap: [AppComponent]
 })
 export class AppModule {
