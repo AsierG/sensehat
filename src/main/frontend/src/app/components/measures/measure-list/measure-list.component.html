@@ -5,6 +5,7 @@
         <th scope="col">Temperature</th>
         <th scope="col">Pressure</th>
         <th scope="col">Date</th>
+        <th scope="col">Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -13,6 +14,13 @@
         <td>{{measure.temperatureFromHumidity}}</td>
         <td>{{measure.pressure}}</td>
         <td>{{measure.date}}</td>
+        <td>
+            <button (click)="editMeasure(measure.id)"
+                    type="button" class="btn btn-outline-primary btn-block">
+                Edit
+            </button>
+        </td>
     </tr>
     </tbody>
 </table>
+

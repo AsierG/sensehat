@@ -12,4 +12,9 @@ export class MeasuresService {
         return this.httpClient.get('/api/sensehat');
     }
 
+    getMeasure(id: number) {
+        console.log(`id: ${id}`);
+        return this.httpClient.get('/api/sensehat/measure');
+    }
+
 }
