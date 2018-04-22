@@ -34,20 +34,28 @@ public class RandomSensorAdapter implements EnvironmentSensorAdapter {
     }
 
     @Override
+    public double getTemperatureFromCpu() {
+        return 21d + random.nextGaussian();
+    }
+
+    @Override
     public Measure getMeasure() {
-        double temperatureFromHumidity = getTemperatureFromHumidity();
-        double temperatureFromPressure = getTemperatureFromPressure();
         double humidity = getHumidity();
         double pressure = getPressure();
+        double temperatureFromHumidity = getTemperatureFromHumidity();
+        double temperatureFromPressure = getTemperatureFromPressure();
+        double temperatureFromCpu = getTemperatureFromCpu();
+        double tempTemperature = (temperatureFromHumidity + temperatureFromPressure) / 2;
+        double temperature = temperatureFromCpu - ((temperatureFromCpu - tempTemperature) / 1.5);
         Date now = new Date();
-
-        Measure measure = Measure.builder()
+        return Measure.builder()
                 .temperatureFromHumidity(temperatureFromHumidity)
                 .temperatureFromPressure(temperatureFromPressure)
+                .temperatureFromCpu(temperatureFromCpu)
+                .temperature(temperature)
                 .pressure(pressure)
                 .humidity(humidity)
                 .date(now)
                 .build();
-        return measure;
     }
 }

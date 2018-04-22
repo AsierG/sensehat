@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {MeasuresService} from "../../../services/measures.service";
+import {Measure} from "../measure.model";
+import {NgForm} from "@angular/forms";
 
 @Component({
     selector: 'app-measure',
@@ -9,27 +11,30 @@ import {MeasuresService} from "../../../services/measures.service";
 export class MeasureComponent implements OnInit {
 
     measure: Measure;
-    // measure: any = {};
 
     constructor(private activatedRoute: ActivatedRoute,
                 private measuresService: MeasuresService) {
 
         this.activatedRoute.params.subscribe(params => {
-            // this.measure = this.measuresService.getMeasure(params['id']);
-            // if(this.measure){
-            //     console.log('controler' + this.measure);
-            // }else{
-            //     console.log('null');
-            // }
-
-            this.measuresService.getMeasure(this.id)
-                .subscribe(measure => this.measure = measure);
-
+            return this.measuresService.getMeasure(params['id'])
+                .subscribe(
+                    (measure: Measure) => {
+                        this.measure = measure;
+                        console.log(this.measure);
+                    },
+                    (error) => console.log(error)
+                );
         });
 
     }
 
     ngOnInit() {
+    }
+
+    update(measureForm: NgForm) {
+        console.log('form submit');
+        console.log("measureForm Value: " + measureForm.value);
+        console.log("measure: " + this.measure);
     }
 
 }

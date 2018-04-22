@@ -37,6 +37,11 @@ public class PythonSensorAdapter implements EnvironmentSensorAdapter {
         return Double.parseDouble(callSenseHatGetter("get_temperature_from_humidity"));
     }
 
+    @Override
+    public double getTemperatureFromCpu() {
+        return 0;
+    }
+
     private String callSenseHatGetter(String getterName) {
         return execPythonCode(String.format("print sense.%s()", getterName));
     }

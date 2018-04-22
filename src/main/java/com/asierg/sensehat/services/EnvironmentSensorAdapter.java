@@ -12,6 +12,8 @@ public interface EnvironmentSensorAdapter {
 
     double getTemperatureFromHumidity();
 
+    double getTemperatureFromCpu();
+
     Measure getMeasure();
 
 }

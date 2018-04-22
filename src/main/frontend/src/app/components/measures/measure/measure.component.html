@@ -1,17 +1,63 @@
+<h4>Edit
+    <small>measure</small>
+</h4>
+<hr>
+<form (ngSubmit)="update(measureForm)" #measureForm="ngForm" novalidate="">
 
-<button [routerLink]="['/home']"
-        class="btn btn-outline-danger">
-    Return
-</button>
+    <div>
 
-<div class="row animated fadeIn fast">
-    PRUEBA
-    <div class="col-md-8">
-        <h3>{{measure.temperatureFromHumidity}}</h3>
-        <hr>
-        <p>
-            {{measure.humidity}}
-        </p>
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Temperature</label>
+            <div class="col-8">
+
+                <input class="form-control"
+                       type="number"
+                       placeholder="Temperature"
+                       name="temperature"
+                       [ngModel]="measure?.temperature"
+                       required
+                >
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Humidity</label>
+            <div class="col-8">
+
+                <input class="form-control"
+                       type="number"
+                       placeholder="Humidity"
+                       name="humidity"
+                       [ngModel]="measure?.humidity"
+                       required
+                >
+            </div>
+        </div>
+
     </div>
 
-</div>
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Pressure</label>
+        <div class="col-md-8">
+
+            <input class="form-control"
+                   type="number"
+                   placeholder="Pressure"
+                   name="pressure"
+                   [ngModel]="measure?.pressure"
+                   required
+            >
+        </div>
+    </div>
+
+
+    <button [routerLink]="['/home']"
+            class="btn btn-outline-danger">
+        Return
+    </button>
+    <button type="submit" class="btn btn-outline-primary">
+        Update
+    </button>
+
+
+</form>
