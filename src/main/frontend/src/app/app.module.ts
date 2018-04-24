@@ -10,6 +10,7 @@ import {MeasureListComponent} from './components/measures/measure-list/measure-l
 import {MeasureGraphicsComponent} from './components/measures/measure-graphics/measure-graphics.component';
 import {AboutComponent} from './components/about/about.component';
 import {FormsModule} from "@angular/forms";
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from "@angular/common/http";
 
 //Services
@@ -30,6 +31,7 @@ import { MeasureComponent } from './components/measures/measure/measure.componen
     imports: [
         BrowserModule,
         FormsModule,
+        NgbModule.forRoot(),
         HttpClientModule,
         APP_ROUTING
     ],

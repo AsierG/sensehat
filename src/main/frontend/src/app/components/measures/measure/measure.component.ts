@@ -20,7 +20,6 @@ export class MeasureComponent implements OnInit {
                 .subscribe(
                     (measure: Measure) => {
                         this.measure = measure;
-                        console.log(this.measure);
                     },
                     (error) => console.log(error)
                 );
@@ -32,9 +31,15 @@ export class MeasureComponent implements OnInit {
     }
 
     update(measureForm: NgForm) {
-        console.log('form submit');
         console.log("measureForm Value: " + measureForm.value);
         console.log("measure: " + this.measure);
+
+        this.measuresService.updateMeasure(this.measure)
+            .subscribe(updatedMeasure => {
+                alert("Measure updated successfully.");
+                console.log('updatedMeasure ' + updatedMeasure);
+            });
+
     }
 
 }

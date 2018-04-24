@@ -14,32 +14,35 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class MeasureController {
 
-    private EnvironmentSensorAdapter environmentSensorAdapter;
-    private MeasureService measureService;
+  private EnvironmentSensorAdapter environmentSensorAdapter;
+  private MeasureService measureService;
 
-    @Autowired
-    public MeasureController(
-            EnvironmentSensorAdapter environmentSensorAdapter, MeasureService measureService) {
-        this.environmentSensorAdapter = environmentSensorAdapter;
-        this.measureService = measureService;
-    }
+  @Autowired
+  public MeasureController(
+      EnvironmentSensorAdapter environmentSensorAdapter, MeasureService measureService) {
+    this.environmentSensorAdapter = environmentSensorAdapter;
+    this.measureService = measureService;
+  }
 
-    @GetMapping({"/measure"})
-    public Measure measure() {
-        return environmentSensorAdapter.getMeasure();
-    }
+  @GetMapping({"/measure"})
+  public Measure measure() {
+    return environmentSensorAdapter.getMeasure();
+  }
 
+  @GetMapping(path = {"/measure/{id}"})
+  public Measure findOne(@PathVariable("id") long id) {
+    return measureService.findById(id);
+  }
 
-    @PostMapping({"/updateMeasure"})
-    public ResponseEntity<MeasureDTO> updateMeasure(@RequestBody MeasureDTO measureDTO) {
-        log.debug("REST request to update Measure : {}", measureDTO);
-        return ResponseEntity.ok()
-                .body(measureDTO);
-    }
+  @PutMapping({"/updateMeasure"})
+  public ResponseEntity<Measure> updateMeasure(@RequestBody MeasureDTO measureDTO) {
+    log.debug("REST request to update Measure a : {}", measureDTO);
+    Measure updatedMeasure = measureService.updateMeasure(measureDTO);
+    return ResponseEntity.ok().body(updatedMeasure);
+  }
 
-    @GetMapping({"", "/"})
-    public Iterable<Measure> listMeasures() {
-        return this.measureService.getAllMeasures();
-    }
-
+  @GetMapping({"", "/"})
+  public Iterable<Measure> listMeasures() {
+    return this.measureService.getAllMeasures();
+  }
 }

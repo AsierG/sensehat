@@ -14,13 +14,11 @@ export class MeasuresService {
     }
 
     getMeasure(id: number) {
-        console.log(`id: ${id}`);
-        return this.httpClient.get('/api/sensehat/measure');
+        return this.httpClient.get(`/api/sensehat/measure/${id}`);
     }
 
-    // updateMeasure(measure:Measure){
-    //     console.log(`measure: ${measure}`);
-    //     return this.httpClient.post('/api/sensehat/measure');
-    // }
+    updateMeasure(measure: Measure) {
+        return this.httpClient.put('/api/sensehat/updateMeasure', measure);
+    }
 
 }
