@@ -16,6 +16,7 @@ import {HttpClientModule} from "@angular/common/http";
 //Services
 import {MeasuresService} from "./services/measures.service";
 import { MeasureComponent } from './components/measures/measure/measure.component';
+import { MeasuresSearchComponent } from './components/measures/measures-search/measures-search.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { MeasureComponent } from './components/measures/measure/measure.componen
         MeasureListComponent,
         MeasureGraphicsComponent,
         AboutComponent,
-        MeasureComponent
+        MeasureComponent,
+        MeasuresSearchComponent
     ],
     imports: [
         BrowserModule,
