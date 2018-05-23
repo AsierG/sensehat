@@ -15,12 +15,18 @@ export class MeasuresSearchComponent implements OnInit {
     }
 
 
-    time = {hour: 13, minute: 30};
+    timeFrom = {hour: 13, minute: 30};
+    timeTo = {hour: 15, minute: 40};
 
-    spinners = true;
+    spinnersFrom = true;
+    spinnersTo = true;
 
-    toggleSpinners() {
-        this.spinners = !this.spinners;
+    toggleSpinnersFrom() {
+        this.spinnersFrom = !this.spinnersFrom;
+    }
+
+    toggleSpinnersTo() {
+        this.spinnersTo = !this.spinnersTo;
     }
 
 }

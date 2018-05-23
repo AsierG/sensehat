@@ -42,14 +42,31 @@
             <form class="form-inline">
                 <div class="form-group">
                     <div class="input-group">
-                        <ngb-timepicker [(ngModel)]="time" name="time" [spinners]="spinners"></ngb-timepicker>
+                        <ngb-timepicker [(ngModel)]="timeFrom" name="timeFrom" [spinners]="spinnersFrom"></ngb-timepicker>
                     </div>
-                    <button class="m-t-1 btn btn-sm btn-outline-{{spinners ? 'success' : 'danger'}}" (click)="toggleSpinners()">
-                        Spinners - {{spinners ? "ON" : "OFF"}}
+                    <button class="m-t-1 btn btn-sm btn-outline-{{spinnersFrom ? 'success' : 'danger'}}" (click)="toggleSpinnersFrom()">
+                        Spinners - {{spinnersFrom ? "ON" : "OFF"}}
                     </button>
                 </div>
             </form>
         </div>
+        <div class="col-sm-5 offset-sm-1">
+            <form class="form-inline">
+                <div class="form-group">
+                    <div class="input-group">
+                        <ngb-timepicker [(ngModel)]="timeTo" name="timeTo" [spinners]="spinnersTo"></ngb-timepicker>
+                    </div>
+                    <button class="m-t-1 btn btn-sm btn-outline-{{spinnersTo ? 'success' : 'danger'}}" (click)="toggleSpinnersTo()">
+                        Spinners - {{spinnersTo ? "ON" : "OFF"}}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+
     </div>
 
     <div class="form-group row">
