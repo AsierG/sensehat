@@ -1,73 +1,75 @@
 <form>
     <div class="form-group row">
-        <label  class="col-sm-1 col-form-label">From</label>
-        <div class="col-sm-5">
-            <form class="form-inline">
-                <div class="form-group">
-                    <div class="input-group">
-                        <input class="form-control" placeholder="yyyy-mm-dd"
-                               name="from" [(ngModel)]="from" ngbDatepicker #dateFrom="ngbDatepicker">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" (click)="dateFrom.toggle()" type="button">
-                                <img src="/assets/img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
-                            </button>
+
+
+            <div class="col-sm-12">
+                <form class="form-inline">
+
+                    <label class="col-form-label col-sm-1">From</label>
+                    <div class="form-group col-sm-3">
+                        <div class="input-group">
+                            <input class="form-control" placeholder="yyyy-mm-dd"
+                                   name="from" [(ngModel)]="from" ngbDatepicker #dateFrom="ngbDatepicker">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" (click)="dateFrom.toggle()" type="button">
+                                    <img src="/assets/img/calendar-icon.svg"
+                                         style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
-        </div>
 
-        <label  class="col-sm-1 col-form-label">To</label>
-        <div class="col-sm-5">
+                    <div class="form-group col-sm-7">
+                        <div class="input-group">
+                            <ngb-timepicker [(ngModel)]="timeFrom" name="timeFrom"
+                                            [spinners]="spinnersFrom"></ngb-timepicker>
+                        </div>
+                        <button class="m-t-1 btn btn-sm btn-outline-{{spinnersFrom ? 'success' : 'danger'}}"
+                                (click)="toggleSpinnersFrom()">
+                            Spinners - {{spinnersFrom ? "ON" : "OFF"}}
+                        </button>
+                    </div>
+
+
+                </form>
+            </div>
+
+        <div class="col-sm-12">
             <form class="form-inline">
-                <div class="form-group">
+
+                <label class="col-form-label col-sm-1">To</label>
+                <div class="form-group col-sm-3">
                     <div class="input-group">
                         <input class="form-control" placeholder="yyyy-mm-dd"
                                name="to" [(ngModel)]="to" ngbDatepicker #dateTo="ngbDatepicker">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" (click)="dateTo.toggle()" type="button">
-                                <img src="/assets/img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                                <img src="/assets/img/calendar-icon.svg"
+                                     style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
                             </button>
                         </div>
                     </div>
                 </div>
-            </form>
-        </div>
 
-
-    </div>
-
-    <div class="form-group row">
-        <div class="col-sm-5 offset-sm-1">
-            <form class="form-inline">
-                <div class="form-group">
+                <div class="form-group col-sm-7">
                     <div class="input-group">
-                        <ngb-timepicker [(ngModel)]="timeFrom" name="timeFrom" [spinners]="spinnersFrom"></ngb-timepicker>
+                        <ngb-timepicker [(ngModel)]="timeTo" name="timeTo"
+                                        [spinners]="spinnersTo"></ngb-timepicker>
                     </div>
-                    <button class="m-t-1 btn btn-sm btn-outline-{{spinnersFrom ? 'success' : 'danger'}}" (click)="toggleSpinnersFrom()">
-                        Spinners - {{spinnersFrom ? "ON" : "OFF"}}
-                    </button>
-                </div>
-            </form>
-        </div>
-        <div class="col-sm-5 offset-sm-1">
-            <form class="form-inline">
-                <div class="form-group">
-                    <div class="input-group">
-                        <ngb-timepicker [(ngModel)]="timeTo" name="timeTo" [spinners]="spinnersTo"></ngb-timepicker>
-                    </div>
-                    <button class="m-t-1 btn btn-sm btn-outline-{{spinnersTo ? 'success' : 'danger'}}" (click)="toggleSpinnersTo()">
+                    <button class="m-t-1 btn btn-sm btn-outline-{{spinnersTo ? 'success' : 'danger'}}"
+                            (click)="toggleSpinnersTo()">
                         Spinners - {{spinnersTo ? "ON" : "OFF"}}
                     </button>
+                    <button class="btn btn-sm btn-outline-primary mr-2" (click)="selectToday()">
+                        Select Today
+                    </button>
                 </div>
+
             </form>
         </div>
-    </div>
-
-
-    <div class="form-group row">
 
     </div>
+
 
     <div class="form-group row">
         <div class="col-sm-10">
@@ -78,24 +80,24 @@
 
 
 <!--<form class="form-inline">-->
-    <!--<div class="form-group">-->
-        <!--<div class="input-group">-->
-            <!--<input class="form-control" placeholder="yyyy-mm-dd"-->
-                   <!--name="d2" #c2="ngModel" [(ngModel)]="model2" ngbDatepicker #d2="ngbDatepicker">-->
-            <!--<div class="input-group-append">-->
-                <!--<button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button">-->
-                    <!--<img src="/assets/img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>-->
-                <!--</button>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
+<!--<div class="form-group">-->
+<!--<div class="input-group">-->
+<!--<input class="form-control" placeholder="yyyy-mm-dd"-->
+<!--name="d2" #c2="ngModel" [(ngModel)]="model2" ngbDatepicker #d2="ngbDatepicker">-->
+<!--<div class="input-group-append">-->
+<!--<button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button">-->
+<!--<img src="/assets/img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>-->
+<!--</button>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
 
-    <!--&lt;!&ndash;<hr/>&ndash;&gt;-->
-    <!--&lt;!&ndash;<button class="btn btn-sm btn-outline-primary" (click)="model2 = today">Select Today</button>&ndash;&gt;-->
-    <!--&lt;!&ndash;<hr/>&ndash;&gt;-->
-    <!--&lt;!&ndash;<pre>Model: {{ model2 | json }}</pre>&ndash;&gt;-->
-    <!--&lt;!&ndash;<pre>State: {{ c2.status }}</pre>&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>-->
+<!--&lt;!&ndash;<hr/>&ndash;&gt;-->
+<!--&lt;!&ndash;<button class="btn btn-sm btn-outline-primary" (click)="model2 = today">Select Today</button>&ndash;&gt;-->
+<!--&lt;!&ndash;<hr/>&ndash;&gt;-->
+<!--&lt;!&ndash;<pre>Model: {{ model2 | json }}</pre>&ndash;&gt;-->
+<!--&lt;!&ndash;<pre>State: {{ c2.status }}</pre>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>-->
 
 
 
