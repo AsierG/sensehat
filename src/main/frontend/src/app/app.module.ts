@@ -13,6 +13,7 @@ import {FormsModule} from "@angular/forms";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from "@angular/common/http";
 
+
 //Services
 import {MeasuresService} from "./services/measures.service";
 import { MeasureComponent } from './components/measures/measure/measure.component';

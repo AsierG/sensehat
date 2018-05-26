@@ -1,6 +1,7 @@
 <h4>Edit
     <small>measure</small>
 </h4>
+
 <hr>
 <form *ngIf="measure" (ngSubmit)="update(measureForm)" #measureForm="ngForm" novalidate="">
 
@@ -10,12 +11,17 @@
         <div class="col-8">
 
             <input class="form-control"
+                   [ngClass]="{'is-invalid':temperature.errors?.required && temperature.touched}"
                    type="number"
                    placeholder="Temperature"
                    name="temperature"
                    [(ngModel)]="measure.temperature"
                    required
+                   #temperature="ngModel"
             >
+            <div *ngIf="temperature.errors?.required" class="invalid-feedback">
+                This field is required
+            </div>
         </div>
     </div>
 
@@ -24,12 +30,17 @@
         <div class="col-8">
 
             <input class="form-control"
+                   [ngClass]="{'is-invalid':humidity.errors?.required && humidity.touched}"
                    type="number"
                    placeholder="Humidity"
                    name="humidity"
                    [(ngModel)]="measure.humidity"
+                   #humidity="ngModel"
                    required
             >
+            <div *ngIf="humidity.errors?.required" class="invalid-feedback">
+                This field is required
+            </div>
         </div>
     </div>
 
@@ -39,17 +50,22 @@
         <div class="col-md-8">
 
             <input class="form-control"
+                   [ngClass]="{'is-invalid':pressure.errors?.required && humidity.touched}"
                    type="number"
                    placeholder="Pressure"
                    name="pressure"
                    [(ngModel)]="measure.pressure"
+                   #pressure="ngModel"
                    required
             >
+            <div *ngIf="pressure.errors?.required" class="invalid-feedback">
+                This field is required
+            </div>
         </div>
     </div>
 
     <div class="form-group row">
-        <label class="col-2 col-form-label">Pressure</label>
+        <label class="col-2 col-form-label">Date</label>
         <div class="col-md-8">
 
             <input class="form-control"
@@ -62,38 +78,20 @@
         </div>
     </div>
 
-    <button [routerLink]="['/home']"
-            class="btn btn-outline-danger">
-        Return
-    </button>
-    <button type="submit" class="btn btn-outline-primary">
-        Update
-    </button>
+    <div class="form-group row">
+        <i class="col-2 fa fa-arrow-circle-left fa-3x"
+           [routerLink]="['/home']">
+        </i>
 
+        <div class="input-group  col-md-8">
 
-
-
-    <!--<div class="col-6">-->
-        <!--<form class="form-inline">-->
-            <!--<div class="form-group">-->
-                <!--<div class="input-group">-->
-                    <!--<input class="form-control" placeholder="yyyy-mm-dd"-->
-                           <!--name="d2" #c2="ngModel" [(ngModel)]="model2" ngbDatepicker #d2="ngbDatepicker">-->
-                    <!--<div class="input-group-append">-->
-                        <!--<button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button">-->
-                            <!--<img src="/assets/img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>-->
-                        <!--</button>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</form>-->
-
-        <!--<hr/>-->
-        <!--<button class="btn btn-sm btn-outline-primary" (click)="model2 = today">Select Today</button>-->
-        <!--<hr/>-->
-        <!--<pre>Model: {{ model2 | json }}</pre>-->
-        <!--<pre>State: {{ c2.status }}</pre>-->
-    <!--</div>-->
+            <button [disabled]="!measureForm.valid"
+                    class="btn btn-outline-primary"
+                    type="submit">
+                Update
+            </button>
+        </div>
+    </div>
 
 
 </form>
