@@ -18,7 +18,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {MeasuresService} from "./services/measures.service";
 import { MeasureComponent } from './components/measures/measure/measure.component';
 import { MeasuresSearchComponent } from './components/measures/measures-search/measures-search.component';
-import { MeasureSearchByDataComponent } from './components/measures/measure-search-by-data/measure-search-by-data.component';
+import { MeasureByDataComponent } from './components/measures/measure-by-data/measure-by-data.component';
 
 
 @NgModule({
@@ -31,7 +31,7 @@ import { MeasureSearchByDataComponent } from './components/measures/measure-sear
         AboutComponent,
         MeasureComponent,
         MeasuresSearchComponent,
-        MeasureSearchByDataComponent
+        MeasureByDataComponent
     ],
     imports: [
         BrowserModule,

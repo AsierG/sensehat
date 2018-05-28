@@ -1,0 +1,107 @@
+<h4>Edit
+    <small>measure by data</small>
+</h4>
+
+<hr>
+<form *ngIf="measure" [formGroup]="measureForm" (ngSubmit)="update()">
+
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Temperature</label>
+        <div class="col-8">
+            <input class="form-control"
+                   [ngClass]="{'is-invalid':!measureForm.get['temperature']?.valid}"
+                   type="number"
+                   placeholder="temperature"
+                   formControlName="temperature"
+            >
+            <div *ngIf="measureForm.controls['temperature'].errors?.required" class="invalid-feedback" >
+                Temperature is required
+            </div>
+            <div *ngIf="measureForm.controls['temperature'].errors?.min" class="invalid-feedback" >
+                Minimum temperature number is -10.
+            </div>
+            <div *ngIf="measureForm.controls['temperature'].errors?.max" class="invalid-feedback" >
+                Maximum temperature can be 100.
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Humidity</label>
+        <div class="col-8">
+            <input class="form-control"
+                   [ngClass]="{'is-invalid':!measureForm.controls['humidity']?.valid}"
+                   type="number"
+                   placeholder="humidity"
+                   formControlName="humidity"
+            >
+            <div *ngIf="measureForm.controls['humidity'].errors?.required" class="invalid-feedback">
+                Humidity is required
+            </div>
+            <div *ngIf="measureForm.controls['humidity'].errors?.min" class="invalid-feedback" >
+                Minimum humidity number is 0.
+            </div>
+            <div *ngIf="measureForm.controls['humidity'].errors?.max" class="invalid-feedback" >
+                Maximum humidity can be 100.
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Pressure</label>
+        <div class="col-md-8">
+
+            <input class="form-control"
+                   [ngClass]="{'is-invalid':!measureForm.controls['pressure']?.valid}"
+                   type="number"
+                   placeholder="pressure"
+                   formControlName="pressure"
+            >
+            <div *ngIf="measureForm.controls['pressure'].errors?.required" class="invalid-feedback">
+                Pressure is required
+            </div>
+            <div *ngIf="measureForm.controls['pressure'].errors?.min" class="invalid-feedback" >
+                Minimum pressure number is 900.
+            </div>
+            <div *ngIf="measureForm.controls['pressure'].errors?.max" class="invalid-feedback" >
+                Maximum pressure can be 1100.
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Date</label>
+        <div class="col-md-8">
+
+            <!--<input class="form-control"-->
+                   <!--type="text"-->
+                   <!--placeholder="Date"-->
+                   <!--name="date"-->
+                   <!--[ngModel]="measure?.date"-->
+                   <!--disabled-->
+            <!--&gt;-->
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <i class="col-2 fa fa-arrow-circle-left fa-3x"
+           [routerLink]="['/home']">
+        </i>
+
+        <div class="input-group  col-md-8">
+
+            <button [disabled]="!measureForm.valid"
+                    class="btn btn-outline-primary"
+                    type="submit">
+                Update
+            </button>
+        </div>
+    </div>
+
+    {{measureForm.valid}}
+
+
+</form>
