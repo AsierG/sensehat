@@ -9,7 +9,7 @@ import {HomeComponent} from './components/home/home.component';
 import {MeasureListComponent} from './components/measures/measure-list/measure-list.component';
 import {MeasureGraphicsComponent} from './components/measures/measure-graphics/measure-graphics.component';
 import {AboutComponent} from './components/about/about.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from "@angular/common/http";
 
@@ -18,6 +18,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {MeasuresService} from "./services/measures.service";
 import { MeasureComponent } from './components/measures/measure/measure.component';
 import { MeasuresSearchComponent } from './components/measures/measures-search/measures-search.component';
+import { MeasureSearchByDataComponent } from './components/measures/measure-search-by-data/measure-search-by-data.component';
 
 
 @NgModule({
@@ -29,13 +30,15 @@ import { MeasuresSearchComponent } from './components/measures/measures-search/m
         MeasureGraphicsComponent,
         AboutComponent,
         MeasureComponent,
-        MeasuresSearchComponent
+        MeasuresSearchComponent,
+        MeasureSearchByDataComponent
     ],
     imports: [
         BrowserModule,
         FormsModule,
         NgbModule.forRoot(),
         HttpClientModule,
+        ReactiveFormsModule,
         APP_ROUTING
     ],
     providers: [MeasuresService],
