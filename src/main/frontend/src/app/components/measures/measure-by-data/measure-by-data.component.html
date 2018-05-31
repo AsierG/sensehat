@@ -10,7 +10,7 @@
         <label class="col-2 col-form-label">Temperature</label>
         <div class="col-8">
             <input class="form-control"
-                   [ngClass]="{'is-invalid':!measureForm.get['temperature']?.valid}"
+                   [ngClass]="{'is-invalid':!measureForm.controls['temperature']?.valid}"
                    type="number"
                    placeholder="temperature"
                    formControlName="temperature"
@@ -76,13 +76,13 @@
         <label class="col-2 col-form-label">Date</label>
         <div class="col-md-8">
 
-            <!--<input class="form-control"-->
-                   <!--type="text"-->
-                   <!--placeholder="Date"-->
-                   <!--name="date"-->
-                   <!--[ngModel]="measure?.date"-->
-                   <!--disabled-->
-            <!--&gt;-->
+            <input class="form-control"
+                   type="text"
+                   placeholder="Date"
+                   name="date"
+                   formControlName="date"
+                   [attr.disabled]=true
+            >
         </div>
     </div>
 

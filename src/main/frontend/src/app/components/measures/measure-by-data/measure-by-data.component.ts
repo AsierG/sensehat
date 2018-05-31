@@ -18,6 +18,13 @@ export class MeasureByDataComponent implements OnInit {
                 private measuresService: MeasuresService) {
 
         this.measureForm = new FormGroup({
+
+            'id': new FormControl(null),
+            'temperatureFromHumidity': new FormControl(null),
+            'temperatureFromCpu': new FormControl(null),
+            'temperatureFromPressure': new FormControl(null),
+            'date': new FormControl(null),
+
             'temperature': new FormControl(null,
                 [Validators.required,
                     Validators.min(-10),
@@ -30,20 +37,24 @@ export class MeasureByDataComponent implements OnInit {
             ),
             'pressure': new FormControl(null,
                 [Validators.required,
-                Validators.min(900),
-                Validators.max(1100)
-            ])
+                    Validators.min(900),
+                    Validators.max(1100)
+                ])
         });
+
 
         this.activatedRoute.params.subscribe(params => {
             return this.measuresService.getMeasure(params['id'])
                 .subscribe(
                     (measure: Measure) => {
                         this.measure = measure;
+                        this.measureForm.setValue(this.measure);
                     },
                     (error) => console.log(error)
                 );
         });
+
+
 
     }
 
@@ -52,6 +63,17 @@ export class MeasureByDataComponent implements OnInit {
 
     update() {
         console.log(this.measureForm.value);
+
+        this.measureForm.reset({
+            'id': null,
+            'temperatureFromHumidity': null,
+            'temperatureFromCpu': null,
+            'temperatureFromPressure': null,
+            'date': null,
+            'temperature': 25,
+            'humidity': 50,
+            'pressure': 1000
+        });
         // console.log("measureForm Value: " + measureForm.value);
         // console.log("measure: " + this.measure);
         //
