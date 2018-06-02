@@ -1,89 +1,109 @@
-<form   [formGroup]="searchForm" (ngSubmit)="search()">
+<form [formGroup]="searchForm" (ngSubmit)="search()">
     <div class="form-group row">
-
-            <div class="col-sm-12 form-inline">
-
-                    <label class="col-form-label col-sm-1">From</label>
-                    <div class="form-group col-sm-3">
-                        <div class="input-group">
-                            <input class="form-control"
-                                   placeholder="yyyy-mm-dd"
-                                   [ngClass]="{'is-invalid':!searchForm.controls['from']?.valid}"
-                                   formControlName="from"
-                                   ngbDatepicker
-                                   #dateFrom="ngbDatepicker"
-                            >
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" (click)="dateFrom.toggle()" type="button">
-                                    <img src="/assets/img/calendar-icon.svg"
-                                         style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group col-sm-7">
-                        <div class="input-group">
-                            <ngb-timepicker formControlName="timeFrom"
-                                            [ngClass]="{'is-invalid':!searchForm.controls['timeFrom']?.valid}"
-                                            [spinners]="spinnersFrom"></ngb-timepicker>
-                        </div>
-                        <button class="m-t-1 btn btn-sm btn-outline-{{spinnersFrom ? 'success' : 'danger'}}"
-                                (click)="toggleSpinnersFrom()">
-                            Spinners - {{spinnersFrom ? "ON" : "OFF"}}
-                        </button>
-                    </div>
-
-
-            </div>
 
         <div class="col-sm-12 form-inline">
 
-
-                <label class="col-form-label col-sm-1">To</label>
-                <div class="form-group col-sm-3">
-                    <div class="input-group">
-                        <input class="form-control"
-                               placeholder="yyyy-mm-dd"
-                               [ngClass]="{'is-invalid':!searchForm.controls['to']?.valid}"
-                               formControlName="to"
-                               ngbDatepicker
-                               #dateTo="ngbDatepicker"
-                        >
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" (click)="dateTo.toggle()" type="button">
-                                <img src="/assets/img/calendar-icon.svg"
-                                     style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
-                            </button>
-                        </div>
+            <label class="col-form-label col-sm-1">From</label>
+            <div class="form-group col-sm-3">
+                <div class="input-group">
+                    <input class="form-control"
+                           placeholder="yyyy-mm-dd"
+                           [ngClass]="{'is-invalid':!searchForm.controls['from']?.valid}"
+                           formControlName="from"
+                           ngbDatepicker
+                           #dateFrom="ngbDatepicker"
+                    >
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" (click)="dateFrom.toggle()" type="button">
+                            <img src="/assets/img/calendar-icon.svg"
+                                 style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                        </button>
+                    </div>
+                    <div *ngIf="searchForm.controls['from'].errors?.required" class="invalid-feedback">
+                        From is required
+                    </div>
+                    <div *ngIf="searchForm.controls['from'].errors?.notValidDates" class="invalid-feedback">
+                        The from date can not be later than the date to
                     </div>
                 </div>
+            </div>
 
-                <div class="form-group col-sm-7">
-                    <div class="input-group">
-                        <ngb-timepicker formControlName="timeTo"
-                                        [ngClass]="{'is-invalid':!searchForm.controls['timeTo']?.valid}"
-                                        [spinners]="spinnersTo"></ngb-timepicker>
+            <div class="form-group col-sm-7">
+                <div class="input-group">
+                    <ngb-timepicker formControlName="timeFrom"
+                                    [ngClass]="{'form-control is-invalid':!searchForm.controls['timeFrom']?.valid}"
+                                    [spinners]="spinnersFrom"></ngb-timepicker>
+                    <div *ngIf="searchForm.controls['timeFrom'].errors?.required" class="invalid-feedback">
+                        Time is required
                     </div>
-                    <button class="m-t-1 btn btn-sm btn-outline-{{spinnersTo ? 'success' : 'danger'}}"
-                            (click)="toggleSpinnersTo()">
-                        Spinners - {{spinnersTo ? "ON" : "OFF"}}
-                    </button>
-                    <button class="btn btn-sm btn-outline-primary mr-2" (click)="selectToday()">
-                        Select Today
-                    </button>
+                    <div *ngIf="searchForm.controls['timeFrom'].errors?.notValidDates" class="invalid-feedback">
+                        The from date can not be later than the date to
+                    </div>
                 </div>
-
+                <button class="m-t-1 btn btn-sm btn-outline-{{spinnersFrom ? 'success' : 'danger'}}"
+                        (click)="toggleSpinnersFrom()">
+                    Spinners - {{spinnersFrom ? "ON" : "OFF"}}
+                </button>
+            </div>
         </div>
 
-    </div>
+        <div class="col-sm-12 form-inline">
+            <label class="col-form-label col-sm-1">To</label>
+            <div class="form-group col-sm-3">
+                <div class="input-group">
+                    <input class="form-control"
+                           placeholder="yyyy-mm-dd"
+                           [ngClass]="{'is-invalid':!searchForm.controls['to']?.valid}"
+                           formControlName="to"
+                           ngbDatepicker
+                           #dateTo="ngbDatepicker"
+                    >
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" (click)="dateTo.toggle()" type="button">
+                            <img src="/assets/img/calendar-icon.svg"
+                                 style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                        </button>
+                    </div>
+                    <div *ngIf="searchForm.controls['to'].errors?.required" class="invalid-feedback">
+                        To is required
+                    </div>
+                    <div *ngIf="searchForm.controls['timeTo'].errors?.notValidDates" class="invalid-feedback">
+                        The to date can not be less than the date from
+                    </div>
+                </div>
+            </div>
 
+            <div class="form-group col-sm-7">
+                <div class="input-group">
+                    <ngb-timepicker formControlName="timeTo"
+                                    [ngClass]="{'form-control is-invalid':!searchForm.controls['timeTo']?.valid}"
+                                    [spinners]="spinnersTo"></ngb-timepicker>
+                    <div *ngIf="searchForm.controls['timeTo'].errors?.required" class="invalid-feedback">
+                        Time is required
+                    </div>
+                    <div *ngIf="searchForm.controls['timeTo'].errors?.notValidDates" class="invalid-feedback">
+                        The to date can not be less than the date from
+                    </div>
+                </div>
+                <button class="m-t-1 btn btn-sm btn-outline-{{spinnersTo ? 'success' : 'danger'}}"
+                        (click)="toggleSpinnersTo()">
+                    Spinners - {{spinnersTo ? "ON" : "OFF"}}
+                </button>
+                <button class="btn btn-sm btn-outline-primary mr-2" (click)="selectToday()">
+                    Select Today
+                </button>
+            </div>
+        </div>
+    </div>
 
     <div class="form-group row">
         <div class="col-sm-10">
             <button type="submit" class="btn btn-primary">Search</button>
+            formValid: {{searchForm.valid}}
         </div>
     </div>
+
+
 </form>
 
 
