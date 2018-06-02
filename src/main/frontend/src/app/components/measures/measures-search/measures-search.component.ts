@@ -1,41 +1,38 @@
-import {Component, OnInit} from '@angular/core';
-import {NgbDateStruct, NgbTimeStruct} from "@ng-bootstrap/ng-bootstrap";
+import {Component} from '@angular/core';
+import {FormControl, FormGroup} from "@angular/forms";
 import * as moment from 'moment';
+import {SearchForm} from "./searchForm.model";
 
-const now = new Date();
-const nowMinusOneWeek = moment().subtract(7,'d').toDate();
+const now: moment.Moment = moment();
+const nowMinusOneWeek: moment.Moment = moment().subtract(7, 'd');
 
 @Component({
     selector: 'app-measures-search',
     templateUrl: './measures-search.component.html'
 })
-export class MeasuresSearchComponent implements OnInit {
+export class MeasuresSearchComponent {
 
-
-    from: NgbDateStruct;
-    timeFrom: NgbTimeStruct;
-
-    to: NgbDateStruct;
-    timeTo: NgbTimeStruct;
+    searchForm: FormGroup;
 
     constructor() {
-    }
 
-    ngOnInit() {
-        this.from =  {year: nowMinusOneWeek.getFullYear(), month: nowMinusOneWeek.getMonth() + 1, day: nowMinusOneWeek.getDate()};
-        this.to =  {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()};
-        this.timeFrom= {hour: now.getHours(), minute: now.getMinutes(), second: now.getSeconds()};
-        this.timeTo= {hour: now.getHours(), minute: now.getMinutes(), second: now.getSeconds()};
+        let search: SearchForm = new SearchForm(nowMinusOneWeek, now);
+        this.searchForm = new FormGroup({
+            'from': new FormControl(null),
+            'timeFrom': new FormControl(null),
+            'to': new FormControl(null),
+            'timeTo': new FormControl(null)
+        });
+        this.searchForm.setValue(search);
     }
 
     spinnersFrom = true;
     spinnersTo = true;
 
     selectToday() {
-        this.to = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()};
-        this.timeTo = {hour: now.getHours(), minute: now.getMinutes(), second:now.getSeconds()}
+        this.searchForm.controls['to'].setValue({year: now.year(), month: now.month() + 1, day: now.date()});
+        this.searchForm.controls['timeTo'].setValue({hour: now.hour(), minute: now.minute(), second: now.second()});
     }
-
 
     toggleSpinnersFrom() {
         this.spinnersFrom = !this.spinnersFrom;
@@ -43,6 +40,10 @@ export class MeasuresSearchComponent implements OnInit {
 
     toggleSpinnersTo() {
         this.spinnersTo = !this.spinnersTo;
+    }
+
+    search() {
+        console.log(this.searchForm);
     }
 
 }
