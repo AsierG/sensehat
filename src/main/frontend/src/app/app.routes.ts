@@ -1,7 +1,6 @@
 import {RouterModule, Routes} from "@angular/router";
 import {HomeComponent} from "./components/home/home.component";
 import {AboutComponent} from "./components/about/about.component";
-import {MeasureComponent} from "./components/measures/measure/measure.component";
 import {MeasureByDataComponent} from "./components/measures/measure-by-data/measure-by-data.component";
 
 const APP_ROUTES: Routes = [

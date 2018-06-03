@@ -6,8 +6,11 @@ import com.asierg.sensehat.services.MeasureService;
 import com.asierg.sensehat.services.dto.MeasureDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 @RestController
 @RequestMapping("/api/sensehat")
@@ -45,4 +48,10 @@ public class MeasureController {
   public Iterable<Measure> listMeasures() {
     return this.measureService.getAllMeasures();
   }
+
+  @GetMapping({"/prueba/{from}"})
+  public Iterable<Measure> listMeasuresPrueba(@PathVariable("from") @DateTimeFormat(pattern="yyyy-MM-dd") Date from) {
+    return this.measureService.getAllMeasures();
+  }
+
 }

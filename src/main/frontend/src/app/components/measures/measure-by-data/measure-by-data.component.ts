@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
+import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 import {Measure} from "../measure.model";
 import {MeasuresService} from "../../../services/measures.service";
 
@@ -14,7 +14,8 @@ export class MeasureByDataComponent implements OnInit {
 
     measureForm: FormGroup;
 
-    constructor(private activatedRoute: ActivatedRoute,
+    constructor(private router: Router,
+                private activatedRoute: ActivatedRoute,
                 private measuresService: MeasuresService) {
 
         this.measureForm = new FormGroup({
@@ -55,34 +56,17 @@ export class MeasureByDataComponent implements OnInit {
         });
 
 
-
     }
 
     ngOnInit() {
     }
 
-    update() {
-        console.log(this.measureForm.value);
-
-        this.measureForm.reset({
-            'id': null,
-            'temperatureFromHumidity': null,
-            'temperatureFromCpu': null,
-            'temperatureFromPressure': null,
-            'date': null,
-            'temperature': 25,
-            'humidity': 50,
-            'pressure': 1000
-        });
-        // console.log("measureForm Value: " + measureForm.value);
-        // console.log("measure: " + this.measure);
-        //
-        // this.measuresService.updateMeasure(this.measure)
-        //     .subscribe(updatedMeasure => {
-        //         // alert("Measure updated successfully.");
-        //         console.log('updatedMeasure ' + updatedMeasure);
-        //     });
-
+    update(measureForm: NgForm) {
+        this.measuresService.updateMeasure(measureForm.value)
+            .subscribe(updatedMeasure => {
+                console.log('updatedMeasure ' + updatedMeasure);
+            });
+        this.router.navigate(['/home']);
     }
 
 

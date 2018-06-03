@@ -3,7 +3,7 @@
 </h4>
 
 <hr>
-<form *ngIf="measure" [formGroup]="measureForm" (ngSubmit)="update()">
+<form *ngIf="measure" [formGroup]="measureForm" (ngSubmit)="update(measureForm)">
 
 
     <div class="form-group row">
@@ -100,8 +100,5 @@
             </button>
         </div>
     </div>
-
-    {{measureForm.valid}}
-
 
 </form>

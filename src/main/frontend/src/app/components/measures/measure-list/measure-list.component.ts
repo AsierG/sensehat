@@ -25,7 +25,6 @@ export class MeasureListComponent implements OnInit {
             );
     }
 
-
     editMeasure(id: number) {
         this.router.navigate(['/measure', id]);
     }
