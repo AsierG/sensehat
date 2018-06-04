@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Measure} from "../components/measures/measure.model";
 import * as moment from 'moment';
+import {DateUtils} from "../components/shared/date-utils.component";
 
 @Injectable()
 export class MeasuresService {
@@ -14,12 +15,10 @@ export class MeasuresService {
         return this.httpClient.get('/api/sensehat');
     }
 
-    getMeasuresPrueba(from: moment.Moment, to: moment.Moment) {
-        // yyyy-MM-dd
-        // let prueba: string = `${from.year()}-${from.month() + 1}-${from.date()}`;
-        let prueba = '2018-06-16';
-        console.log(prueba);
-        return this.httpClient.get(`/api/sensehat/prueba/${prueba}`);
+    getMeasuresBetweenDates(from: moment.Moment, to: moment.Moment) {
+        let fromString: string = DateUtils.getDateAsString(from);
+        let toString: string = DateUtils.getDateAsString(to);
+        return this.httpClient.get(`/api/sensehat/measures/${fromString}/${toString}`);
     }
 
     getMeasure(id: number) {

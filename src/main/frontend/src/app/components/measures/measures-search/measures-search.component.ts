@@ -52,7 +52,7 @@ export class MeasuresSearchComponent {
                         this.searchForm.controls['timeFrom'].value);
                     let to: moment.Moment = DateUtils.getMoment(this.searchForm.controls['to'].value,
                         this.searchForm.controls['timeTo'].value);
-                    this.getMeasuresPrueba(from, to);
+                    this.getMeasures(from, to);
                 } else {
                     this.measures = [];
                 }
@@ -60,8 +60,8 @@ export class MeasuresSearchComponent {
 
     }
 
-    getMeasuresPrueba(from: moment.Moment, to: moment.Moment) {
-        this.measuresService.getMeasuresPrueba(from, to)
+    getMeasures(from: moment.Moment, to: moment.Moment) {
+        this.measuresService.getMeasuresBetweenDates(from, to)
             .subscribe(
                 (measures: Measure[]) => {
                     this.measures = measures;

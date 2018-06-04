@@ -10,6 +10,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @RestController
@@ -49,9 +51,10 @@ public class MeasureController {
     return this.measureService.getAllMeasures();
   }
 
-  @GetMapping({"/prueba/{from}"})
-  public Iterable<Measure> listMeasuresPrueba(@PathVariable("from") @DateTimeFormat(pattern="yyyy-MM-dd") Date from) {
+  @GetMapping({"/measures/{from}/{to}"})
+  public Iterable<Measure> getMeasuresBetweenDates(
+      @PathVariable("from") @DateTimeFormat(pattern = "dd-MM-yyyy_HH:mm:ss") LocalDateTime from,
+      @PathVariable("to") @DateTimeFormat(pattern = "dd-MM-yyyy_HH:mm:ss") LocalDateTime to) {
     return this.measureService.getAllMeasures();
   }
-
 }
