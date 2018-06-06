@@ -10,9 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @RestController
 @RequestMapping("/api/sensehat")
@@ -55,6 +53,6 @@ public class MeasureController {
   public Iterable<Measure> getMeasuresBetweenDates(
       @PathVariable("from") @DateTimeFormat(pattern = "dd-MM-yyyy_HH:mm:ss") LocalDateTime from,
       @PathVariable("to") @DateTimeFormat(pattern = "dd-MM-yyyy_HH:mm:ss") LocalDateTime to) {
-    return this.measureService.getAllMeasures();
+    return this.measureService.getMeasuresBetweenDates(from, to);
   }
 }

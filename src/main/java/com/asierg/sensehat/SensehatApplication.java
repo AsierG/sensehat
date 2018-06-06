@@ -10,31 +10,46 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 
+import java.time.LocalDate;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
 @SpringBootApplication
 public class SensehatApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(SensehatApplication.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(SensehatApplication.class, args);
+  }
 
-    private EnvironmentSensorAdapter environmentSensorAdapter;
+  private EnvironmentSensorAdapter environmentSensorAdapter;
 
-    @Autowired
-    public SensehatApplication(EnvironmentSensorAdapter environmentSensorAdapter) {
-        this.environmentSensorAdapter = environmentSensorAdapter;
-    }
+  @Autowired
+  public SensehatApplication(EnvironmentSensorAdapter environmentSensorAdapter) {
+    this.environmentSensorAdapter = environmentSensorAdapter;
+  }
 
-    @Bean
-    @Profile("default")
-    CommandLineRunner runner(MeasureService measureService) {
-        return args -> {
-            IntStream.rangeClosed(1, 100).forEach(i -> {
+  @Bean
+  @Profile("default")
+  CommandLineRunner runner(MeasureService measureService) {
+    return args -> {
+      IntStream.rangeClosed(1, 100)
+          .forEach(
+              i -> {
                 Measure measure = environmentSensorAdapter.getMeasure();
+                long minDay = LocalDate.of(2018, 5, 25).toEpochDay();
+                long maxDay = LocalDate.of(2018, 6, 15).toEpochDay();
+                long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
+                LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
+                int minHour = 0;
+                int maxHour = 23;
+                int randomHour = ThreadLocalRandom.current().nextInt(minHour, maxHour);
+                int min = 0;
+                int max = 59;
+                int randomMinute = ThreadLocalRandom.current().nextInt(min, max);
+                int randomSecond = ThreadLocalRandom.current().nextInt(min, max);
+                measure.setDate(randomDate.atTime(randomHour, randomMinute, randomSecond));
                 measureService.saveMeasure(measure);
-            });
-        };
-    }
-
+              });
+    };
+  }
 }
