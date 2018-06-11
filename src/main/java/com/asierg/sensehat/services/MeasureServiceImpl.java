@@ -6,6 +6,8 @@ import com.asierg.sensehat.services.dto.MeasureDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 @Slf4j
 public class MeasureServiceImpl implements MeasureService {
@@ -27,7 +29,12 @@ public class MeasureServiceImpl implements MeasureService {
   }
 
   public Iterable<Measure> getAllMeasures() {
-    return measureRepository.findAll();
+    return measureRepository.findAllByOrderByDateAsc();
+  }
+
+  @Override
+  public Iterable<Measure> getMeasuresBetweenDates(LocalDateTime from, LocalDateTime to) {
+    return measureRepository.getAllByDateIsBetweenOrderByDateAsc(from, to);
   }
 
   @Override
