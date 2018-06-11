@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import * as moment from 'moment';
 import {SearchForm} from "./searchForm.model";
@@ -65,7 +65,7 @@ export class MeasuresSearchComponent {
             .subscribe(
                 (measures: Measure[]) => {
                     this.measures = measures;
-                    console.log(this.measures);
+                    console.log(this.measures.length);
                 },
                 (error) => console.log(error)
             );

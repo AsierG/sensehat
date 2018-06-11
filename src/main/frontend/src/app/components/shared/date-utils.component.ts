@@ -4,10 +4,8 @@ import * as moment from 'moment';
 export class DateUtils {
 
     static getMoment(dateStruct: NgbDateStruct, timeStruct: NgbTimeStruct): moment.Moment {
-        let momentDate: moment.Moment =
-            moment().year(dateStruct.year).month(dateStruct.month - 1).date(dateStruct.day)
-                .hour(timeStruct.hour).minute(timeStruct.minute).second(timeStruct.second);
-        return momentDate;
+        return moment().year(dateStruct.year).month(dateStruct.month - 1).date(dateStruct.day)
+            .hour(timeStruct.hour).minute(timeStruct.minute).second(timeStruct.second);
     }
 
     static getDateAsString(momentDate: moment.Moment): string {
