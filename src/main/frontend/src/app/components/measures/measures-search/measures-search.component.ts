@@ -45,14 +45,12 @@ export class MeasuresSearchComponent {
         ]);
         this.searchForm.setValue(search);
 
+        this.getMeasures();
+
         this.searchForm.valueChanges
             .subscribe(data => {
                 if (this.searchForm.valid) {
-                    let from: moment.Moment = DateUtils.getMoment(this.searchForm.controls['from'].value,
-                        this.searchForm.controls['timeFrom'].value);
-                    let to: moment.Moment = DateUtils.getMoment(this.searchForm.controls['to'].value,
-                        this.searchForm.controls['timeTo'].value);
-                    this.getMeasures(from, to);
+                    this.getMeasures();
                 } else {
                     this.measures = [];
                 }
@@ -60,7 +58,11 @@ export class MeasuresSearchComponent {
 
     }
 
-    getMeasures(from: moment.Moment, to: moment.Moment) {
+    getMeasures() {
+        let from: moment.Moment = DateUtils.getMoment(this.searchForm.controls['from'].value,
+            this.searchForm.controls['timeFrom'].value);
+        let to: moment.Moment = DateUtils.getMoment(this.searchForm.controls['to'].value,
+            this.searchForm.controls['timeTo'].value);
         this.measuresService.getMeasuresBetweenDates(from, to)
             .subscribe(
                 (measures: Measure[]) => {

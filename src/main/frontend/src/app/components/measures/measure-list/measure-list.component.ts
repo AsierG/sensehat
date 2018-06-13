@@ -17,13 +17,6 @@ export class MeasureListComponent implements OnInit {
     }
 
     ngOnInit() {
-        // return this.measuresService.getMeasures()
-        //     .subscribe(
-        //         (measures: Measure[]) => {
-        //             this.measures = measures;
-        //         },
-        //         (error) => console.log(error)
-        //     );
     }
 
     editMeasure(id: number) {

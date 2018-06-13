@@ -19,6 +19,8 @@ import {MeasuresService} from "./services/measures.service";
 import { MeasureComponent } from './components/measures/measure/measure.component';
 import { MeasuresSearchComponent } from './components/measures/measures-search/measures-search.component';
 import { MeasureByDataComponent } from './components/measures/measure-by-data/measure-by-data.component';
+import {ChartsModule} from "ng2-charts";
+import {WeatherService} from "./components/measures/measure-graphics/weather.service";
 
 
 @NgModule({
@@ -39,9 +41,10 @@ import { MeasureByDataComponent } from './components/measures/measure-by-data/me
         NgbModule.forRoot(),
         HttpClientModule,
         ReactiveFormsModule,
+        ChartsModule,
         APP_ROUTING
     ],
-    providers: [MeasuresService],
+    providers: [MeasuresService, WeatherService],
     bootstrap: [AppComponent]
 })
 export class AppModule {
