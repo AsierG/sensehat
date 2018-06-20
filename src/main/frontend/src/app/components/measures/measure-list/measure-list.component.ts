@@ -13,11 +13,14 @@ export class MeasureListComponent implements OnInit {
 
     constructor(private measuresService: MeasuresService,
                 private router: Router) {
-        console.log('hemen daude: ' + this.measures);
+
     }
 
     ngOnInit() {
+        console.log('hemen daude: ' + this.measures);
     }
+
+
 
     editMeasure(id: number) {
         this.router.navigate(['/measure', id]);
