@@ -8,10 +8,9 @@ import {Chart} from 'chart.js';
 })
 export class MeasureGraphicsComponent implements OnInit, OnChanges {
 
-    @Input() measures: Measure[] ;
+    @Input() measures: Measure[];
 
     @ViewChild('canvas') canvas: ElementRef;
-
 
     chart = [];
 
@@ -21,8 +20,8 @@ export class MeasureGraphicsComponent implements OnInit, OnChanges {
     public lineChartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
     public lineChartType: string = 'line';
 
-
-    // public dates: Array<any> = this.measures.map((measure) => measure.date);
+    public dates: Array<String> = [];
+    public temperatures: Array<Number> = [];
 
     public chartClicked(e: any): void {
         console.log(e);
@@ -32,21 +31,22 @@ export class MeasureGraphicsComponent implements OnInit, OnChanges {
         console.log(e);
     }
 
-
     constructor() {
-
     }
 
     ngOnInit(): void {
         // this.loadChart();
-        let dates: Array<any> = this.measures.map((measure) => measure.date);
-        console.log('dates ' + dates + ' fin')
     }
 
     ngOnChanges(changes: SimpleChanges) {
         // console.log(changes);
         const currentMeasures = <Measure[]> changes.measures.currentValue;
-        console.log('currentMeasures ' + currentMeasures);
+        this.dates = this.measures.map((measure) => measure.date);
+        this.temperatures = this.measures.map((measure) => measure.temperature);
+        console.log('dates ' + this.dates + ' fin');
+        console.log('temperatures ' + this.temperatures + ' fin');
+        // console.log('currentMeasures ' + currentMeasures);
+        this.loadChart();
     }
 
 
@@ -59,11 +59,13 @@ export class MeasureGraphicsComponent implements OnInit, OnChanges {
         let options = {
             type: 'line',
             data: {
-                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                // labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                labels: this.dates,
                 datasets: [
                     {
-                        label: '# of Votes',
-                        data: [12, 19, 3, 5, 2, 3],
+                        label: 'Temperature',
+                        // data: [12, 19, 3, 5, 2, 3],
+                        data: this.temperatures,
                         borderWidth: 1
                     }
                 ]
