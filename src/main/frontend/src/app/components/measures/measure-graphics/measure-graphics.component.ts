@@ -64,19 +64,28 @@ export class MeasureGraphicsComponent implements OnInit, OnChanges {
                 datasets: [
                     {
                         label: 'Temperature',
-                        // data: [12, 19, 3, 5, 2, 3],
                         data: this.temperatures,
-                        borderWidth: 1
+                        borderColor: "#c45850",
+                        fill: true
                     }
                 ]
             },
             options: {
                 scales: {
+                    xAxes: [{
+                        ticks: {
+                            display: false
+                        }
+                    }],
                     yAxes: [{
                         ticks: {
                             reverse: false
                         }
                     }]
+                },
+                title: {
+                    display: true,
+                    text: 'Temperature Measures'
                 }
             }
         };
