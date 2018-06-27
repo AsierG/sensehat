@@ -21,6 +21,7 @@ export class MeasureGraphicsComponent implements OnInit, OnChanges {
     public lineChartType: string = 'line';
 
     public dates: Array<String> = [];
+    public dates2: Array<any> = [];
     public temperatures: Array<Number> = [];
 
     public chartClicked(e: any): void {
@@ -42,6 +43,9 @@ export class MeasureGraphicsComponent implements OnInit, OnChanges {
         // console.log(changes);
         const currentMeasures = <Measure[]> changes.measures.currentValue;
         this.dates = this.measures.map((measure) => measure.date);
+        // this.dates2 = this.measures.map((measure) => {
+        //     measure.date
+        // });
         this.temperatures = this.measures.map((measure) => measure.temperature);
         console.log('dates ' + this.dates + ' fin');
         console.log('temperatures ' + this.temperatures + ' fin');
@@ -71,12 +75,23 @@ export class MeasureGraphicsComponent implements OnInit, OnChanges {
                 ]
             },
             options: {
+                tooltips: {
+                    callbacks: {
+                        label: function (tooltipItem) {
+                            return tooltipItem.yLabel.toFixed(2);
+                        }
+                    }
+                },
                 scales: {
                     xAxes: [{
                         ticks: {
-                            display: false
+                            display: true
                         }
                     }],
+                    // xAxes: [{
+                    //     type: 'time',
+                    // }],
+
                     yAxes: [{
                         ticks: {
                             reverse: false
