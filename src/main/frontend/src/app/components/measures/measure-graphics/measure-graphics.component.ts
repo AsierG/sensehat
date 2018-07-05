@@ -67,6 +67,13 @@ export class MeasureGraphicsComponent implements OnInit, OnChanges {
                 ]
             },
             options: {
+                tooltips: {
+                    callbacks: {
+                        label: function (tooltipItem) {
+                            return tooltipItem.yLabel.toFixed(2);
+                        }
+                    }
+                },
                 scales: {
                     xAxes: [{
                         type: 'time',
