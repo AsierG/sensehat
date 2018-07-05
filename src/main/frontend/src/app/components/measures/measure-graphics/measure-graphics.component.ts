@@ -1,5 +1,6 @@
 import {Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {Measure} from "../measure.model";
+import * as moment from 'moment';
 import {Chart} from 'chart.js';
 
 @Component({
@@ -20,7 +21,7 @@ export class MeasureGraphicsComponent implements OnInit, OnChanges {
     public lineChartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
     public lineChartType: string = 'line';
 
-    public dates: Array<String> = [];
+    public dates: Array<any> = [];
     public temperatures: Array<Number> = [];
 
     public chartClicked(e: any): void {
@@ -39,27 +40,22 @@ export class MeasureGraphicsComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        // console.log(changes);
+
         const currentMeasures = <Measure[]> changes.measures.currentValue;
-        this.dates = this.measures.map((measure) => measure.date);
-        this.temperatures = this.measures.map((measure) => measure.temperature);
-        console.log('dates ' + this.dates + ' fin');
-        console.log('temperatures ' + this.temperatures + ' fin');
-        // console.log('currentMeasures ' + currentMeasures);
-        this.loadChart();
+        if (currentMeasures.length > 0) {
+            this.dates = currentMeasures
+                .map((measure) => moment(measure.date, "DD-MM-YYYY HH:mm:ss"));
+            this.temperatures = currentMeasures
+                .map((measure) => measure.temperature);
+            this.loadChart();
+        }
+
     }
-
-
-    ngAfterViewInit() {
-        // this.loadChart();
-    }
-
 
     loadChart() {
         let options = {
             type: 'line',
             data: {
-                // labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
                 labels: this.dates,
                 datasets: [
                     {
@@ -73,9 +69,18 @@ export class MeasureGraphicsComponent implements OnInit, OnChanges {
             options: {
                 scales: {
                     xAxes: [{
-                        ticks: {
-                            display: false
+                        type: 'time',
+                        position: 'bottom',
+                        time: {
+                            unit: 'hour',
+                            unitStepSize: 5,
+                            round: 'minute',
+                            tooltipFormat: "DD MMM YYYY, HH:mm:ss",
+                            displayFormats: {
+                                hour: 'D MMM, HH'
+                            }
                         }
+
                     }],
                     yAxes: [{
                         ticks: {
