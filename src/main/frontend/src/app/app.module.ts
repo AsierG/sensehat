@@ -13,15 +13,16 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from "@angular/common/http";
 
+import {ChartsModule} from "ng2-charts";
+import {HighchartsChartModule} from "highcharts-angular";
 
-//Services
-import {MeasuresService} from "./services/measures.service";
+
 import { MeasureComponent } from './components/measures/measure/measure.component';
 import { MeasuresSearchComponent } from './components/measures/measures-search/measures-search.component';
 import { MeasureByDataComponent } from './components/measures/measure-by-data/measure-by-data.component';
-import {ChartsModule} from "ng2-charts";
-import {WeatherService} from "./components/measures/measure-graphics/weather.service";
 
+//Services
+import {MeasuresService} from "./services/measures.service";
 
 @NgModule({
     declarations: [
@@ -42,9 +43,10 @@ import {WeatherService} from "./components/measures/measure-graphics/weather.ser
         HttpClientModule,
         ReactiveFormsModule,
         ChartsModule,
+        HighchartsChartModule,
         APP_ROUTING
     ],
-    providers: [MeasuresService, WeatherService],
+    providers: [MeasuresService],
     bootstrap: [AppComponent]
 })
 export class AppModule {
