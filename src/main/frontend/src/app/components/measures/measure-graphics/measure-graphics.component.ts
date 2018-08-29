@@ -22,18 +22,60 @@ export class MeasureGraphicsComponent implements OnChanges {
     // Demo #1
     optFromInputString = `
   {
-    "subtitle": { "text": "Highcharts chart" },
-    "series": [{
-      "type": "line",
-      "data": [11,2,3]
-    }, {
-      "data": [5,6,7]
-    }]
+      "rangeSelector" : {
+            "selected" : 100
+        },
+        "title": {
+            "text": "CPU Temperature Raspberry Pi"
+        },
+        "xAxis": {
+            "type": "datetime",
+            "tickPixelInterval": 150,
+            "maxZoom": 20000
+        },
+        "yAxis": {
+            "minPadding": 0.2,
+            "maxPadding": 0.2,
+            "title": {
+                "text": "Temperature ºC",
+                "margin": 80
+            }
+        },
+        "series": [{
+            "name": "Temperature",
+            "data": [98777, 4]
+        }]
   }
   `;
 
     optFromInput = JSON.parse(this.optFromInputString);
     updateFromInput = false;
+
+    optPrueba = {
+        "rangeSelector" : {
+            "selected" : 100
+        },
+        "title": {
+            "text": "CPU Temperature Raspberry Pi"
+        },
+        "xAxis": {
+            "type": "datetime",
+            "tickPixelInterval": 150,
+            "maxZoom": 20000
+        },
+        "yAxis": {
+            "minPadding": 0.2,
+            "maxPadding": 0.2,
+            "title": {
+                "text": "Temperature ºC",
+                "margin": 80
+            }
+        },
+        "series": [{
+            "name": "Temperature",
+            "data": [98777, 4]
+        }]
+    };
 
     updateInputChart() {
         this.optFromInput = JSON.parse(this.optFromInputString);
