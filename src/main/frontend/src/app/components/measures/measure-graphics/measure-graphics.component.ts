@@ -16,6 +16,7 @@ export class MeasureGraphicsComponent implements OnChanges {
     public dates: Array<any> = [];
     public temperatures: Array<Number> = [];
 
+
     // For all demos:
     Highcharts = Highcharts;
 
@@ -52,8 +53,8 @@ export class MeasureGraphicsComponent implements OnChanges {
     updateFromInput = false;
 
     optPrueba = {
-        "rangeSelector" : {
-            "selected" : 100
+        "rangeSelector": {
+            "selected": 100
         },
         "title": {
             "text": "CPU Temperature Raspberry Pi"
@@ -73,7 +74,10 @@ export class MeasureGraphicsComponent implements OnChanges {
         },
         "series": [{
             "name": "Temperature",
-            "data": [98777, 4]
+            "data": [
+                {x: Date.UTC(2014, 0, 1), y: 50},
+                {x: Date.UTC(2014, 2, 1), y: 20}
+            ]
         }]
     };
 
@@ -81,7 +85,7 @@ export class MeasureGraphicsComponent implements OnChanges {
         this.optFromInput = JSON.parse(this.optFromInputString);
     }
 
-    seriesTypes: {[key: string]: string} = {
+    seriesTypes: { [key: string]: string } = {
         line: 'column',
         column: 'scatter',
         scatter: 'spline',
@@ -99,14 +103,28 @@ export class MeasureGraphicsComponent implements OnChanges {
 
     ngOnChanges(changes: SimpleChanges) {
         const currentMeasures = <Measure[]> changes.measures.currentValue;
+
+        var prueba: any[] = [];
+
         if (currentMeasures.length > 0) {
             this.dates = currentMeasures
                 .map((measure) => moment(measure.date, "DD-MM-YYYY HH:mm:ss"));
             this.temperatures = currentMeasures
                 .map((measure) => measure.temperature);
+
+            currentMeasures
+                .map((measure) => prueba.push(
+                    {x: moment(measure.date, "DD-MM-YYYY HH:mm:ss").valueOf(),
+                        y: measure.temperature})
+                );
+            console.log('PRUEBA ' + prueba);
+
+            this.optPrueba.series = prueba;
+
+
+
         }
     }
-
 
 
 }
