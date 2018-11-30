@@ -2,6 +2,11 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Measure} from "../measure.model";
 import {MeasuresService} from "../../../services/measures.service";
 import {Router} from "@angular/router";
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+
+registerLocaleData(localeEs, 'es');
+
 
 @Component({
     selector: 'app-measure-list',
@@ -10,6 +15,8 @@ import {Router} from "@angular/router";
 export class MeasureListComponent implements OnInit {
 
     @Input() measures: Measure[] = [];
+
+
 
     constructor(private measuresService: MeasuresService,
                 private router: Router) {

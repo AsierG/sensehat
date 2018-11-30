@@ -16,74 +16,88 @@ export class MeasureGraphicsComponent implements OnChanges {
     @Input() measures: Measure[];
 
     private dates: Array<Moment> = [];
-    private temperatures: Array<Number> = [];
-
-    private chart = [];
-
-    public barChartOptions: any = {
-        scaleShowVerticalLines: false,
-        responsive: true
-    };
-
+    private temperatures: Array<number> = [];
+    private temperaturesChart = [];
 
     ngOnChanges(changes: SimpleChanges): void {
-
         const currentMeasures = <Measure[]> changes.measures.currentValue;
-        const weahterDays = [];
-
+        const weatherDays: Array<string> = [];
         if (currentMeasures.length > 0) {
-            console.log('currentMeasures ' + currentMeasures.length);
             this.dates = currentMeasures
                 .map((measure) => moment(measure.date, 'DD-MM-YYYY'));
             this.temperatures = currentMeasures
                 .map((measure) => Math.round(measure.temperature * 100) / 100);
             this.dates.forEach(date => {
-                weahterDays.push(date.format('MMMM Do YYYY'));
+                weatherDays.push(date.format('MMMM Do YYYY'));
             });
 
-            this.chart = new Chart('canvas', {
-                type: 'bar',
-                data: {
-                    labels: weahterDays,
-                    datasets: [
-                        {
-                            label: 'Max',
-                            data: this.temperatures,
-                            backgroundColor: '#F78181',
-                            fill: false
-                        },
-                        {
-                            label: "Min",
-                            data: this.temperatures,
-                            backgroundColor: '#2E9AFE',
-                            fill: false
-                        }
-                    ]
-                },
-                options: {
-                    legend: {
-                        display: false
-                    },
-                    scales: {
-                        xAxes: [
-                            {
-                                display: true
-                            }
-                        ],
-                        yAxes: [
-                            {
-                                display: true
-                            }
-                        ]
-                    }
-                }
-            });
+            this.temperaturesChart = this.getTemperaturesChart(weatherDays,
+                this.temperatures, this.temperatures, this.temperatures);
 
         }
-
-        console.log('weahterDays ' + weahterDays);
-
     }
 
 
+    private getTemperaturesChart(weatherDays: Array<string>,
+                                 maxValues: Array<number>,
+                                 meanValues: Array<number>,
+                                 minValues: Array<number>) {
+        return new Chart('canvas', {
+            type: 'bar',
+            data: {
+                labels: weatherDays,
+                datasets: [
+                    {
+                        label: 'Max',
+                        data: maxValues,
+                        backgroundColor: '#F78181',
+                        fill: false
+                    },
+                    {
+                        label: 'Avg',
+                        data: meanValues,
+                        backgroundColor: '#04B45F',
+                        fill: false
+                    },
+                    {
+                        label: 'Min',
+                        data: minValues,
+                        backgroundColor: '#2E9AFE',
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                legend: {
+                    display: true
+                },
+                tooltips: {
+                    callbacks: {
+                        label: function (tooltipItem) {
+                            return new Intl.NumberFormat('es-es',
+                                {minimumFractionDigits: 2}).format(tooltipItem.yLabel);
+                        }
+                    }
+                },
+                scales: {
+                    xAxes: [
+                        {
+                            display: true
+                        }
+                    ],
+                    yAxes: [
+                        {
+                            display: true,
+                            ticks: {
+                                callback: function (value) {
+                                    return new Intl.NumberFormat('es-es',
+                                        {minimumFractionDigits: 2}).format(value);
+                                },
+                            }
+                        }
+                    ]
+                }
+            }
+        });
+    }
 }

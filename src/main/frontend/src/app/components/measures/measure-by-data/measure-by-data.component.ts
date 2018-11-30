@@ -11,7 +11,6 @@ import {MeasuresService} from "../../../services/measures.service";
 export class MeasureByDataComponent implements OnInit {
 
     measure: Measure;
-
     measureForm: FormGroup;
 
     constructor(private router: Router,

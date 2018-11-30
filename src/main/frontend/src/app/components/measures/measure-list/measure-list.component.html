@@ -11,8 +11,8 @@
     <tbody>
     <tr *ngFor="let measure of measures">
         <th scope="row">{{measure.id}}</th>
-        <td>{{measure.temperatureFromHumidity}}</td>
-        <td>{{measure.pressure}}</td>
+        <td>{{measure.temperatureFromHumidity | number:'2.2-2' : 'es'}}</td>
+        <td>{{measure.pressure | number:'3.1-2' : 'es'}}</td>
         <td>{{measure.date}}</td>
         <td>
             <button (click)="editMeasure(measure.id)"
