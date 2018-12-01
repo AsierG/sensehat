@@ -5,15 +5,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class MeasureDTO {
 
-    private Long id;
-    private Double temperature;
-    private Double pressure;
-    private Double humidity;
-
+  private long id;
+  private double temperature;
+  private double pressure;
+  private double humidity;
+  private LocalDateTime date;
 }

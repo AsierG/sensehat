@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/sensehat")
@@ -45,12 +46,12 @@ public class MeasureController {
   }
 
   @GetMapping({"", "/"})
-  public Iterable<Measure> listMeasures() {
+  public List<Measure> listMeasures() {
     return this.measureService.getAllMeasures();
   }
 
   @GetMapping({"/measures/{from}/{to}"})
-  public Iterable<Measure> getMeasuresBetweenDates(
+  public List<Measure> getMeasuresBetweenDates(
       @PathVariable("from") @DateTimeFormat(pattern = "dd-MM-yyyy_HH:mm:ss") LocalDateTime from,
       @PathVariable("to") @DateTimeFormat(pattern = "dd-MM-yyyy_HH:mm:ss") LocalDateTime to) {
     return this.measureService.getMeasuresBetweenDates(from, to);

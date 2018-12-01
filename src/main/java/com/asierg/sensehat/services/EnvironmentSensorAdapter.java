@@ -4,16 +4,15 @@ import com.asierg.sensehat.domain.Measure;
 
 public interface EnvironmentSensorAdapter {
 
-    double getHumidity();
+  double getHumidity();
 
-    double getPressure();
+  double getPressure();
 
-    double getTemperatureFromPressure();
+  double getTemperatureFromPressure();
 
-    double getTemperatureFromHumidity();
+  double getTemperatureFromHumidity();
 
-    double getTemperatureFromCpu();
+  double getTemperatureFromCpu();
 
-    Measure getMeasure();
-
+  Measure getMeasure();
 }
