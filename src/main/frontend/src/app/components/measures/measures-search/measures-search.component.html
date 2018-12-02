@@ -106,11 +106,12 @@
 
 </form>
 
-<!--<app-temperature-chart></app-temperature-chart>-->
+<div *ngIf="measureInfo" >
+    <app-measure-graphics [measureInfo]="measureInfo"></app-measure-graphics>
+    <app-measure-list [measures]="measureInfo.measures" ></app-measure-list>
+</div>
 
-<app-measure-graphics [measures]="measures"></app-measure-graphics>
 
-<app-measure-list [measures]="measures" ></app-measure-list>
 
 
 

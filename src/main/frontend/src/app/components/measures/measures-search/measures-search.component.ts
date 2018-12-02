@@ -17,7 +17,6 @@ const nowMinusOneWeek: moment.Moment = moment().subtract(7, 'd');
 export class MeasuresSearchComponent {
 
     searchForm: FormGroup;
-    measures: Measure[] = [];
     measureInfo: MeasuresInfo;
 
     constructor(private measuresService: MeasuresService) {
@@ -56,10 +55,9 @@ export class MeasuresSearchComponent {
                         this.searchForm.controls['timeTo'].value);
                     this.getMeasures(from, to);
                 } else {
-                    this.measures = [];
+                    this.measureInfo.measures = [];
                 }
             });
-
     }
 
     getMeasures(from: moment.Moment, to: moment.Moment) {
@@ -67,7 +65,6 @@ export class MeasuresSearchComponent {
             .subscribe(
                 (measureInfo: MeasuresInfo) => {
                     this.measureInfo = measureInfo;
-                    this.measures = this.measureInfo.measures;
                     console.log(this.measureInfo);
                 },
                 (error) => console.log(error)

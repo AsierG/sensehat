@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Measure} from "../models/measure.model";
 import {MeasuresService} from "../../../services/measures.service";
 import {Router} from "@angular/router";
-import { registerLocaleData } from '@angular/common';
+import {registerLocaleData} from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 
 registerLocaleData(localeEs, 'es');

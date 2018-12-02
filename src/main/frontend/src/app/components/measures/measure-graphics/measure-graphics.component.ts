@@ -1,8 +1,6 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {Measure} from '../models/measure.model';
 import {Chart} from 'chart.js';
-import * as moment from 'moment';
-import {Moment} from 'moment';
+import {MeasuresInfo} from "../models/measuresInfo.model";
 
 // import {Moment} from 'moment';
 
@@ -13,26 +11,24 @@ import {Moment} from 'moment';
 })
 export class MeasureGraphicsComponent implements OnChanges {
 
-    @Input() measures: Measure[];
+    @Input() measureInfo: MeasuresInfo;
 
-    private dates: Array<Moment> = [];
-    private temperatures: Array<number> = [];
+    private temperaturesMax: Array<number> = [];
+    private temperaturesMin: Array<number> = [];
+    private temperaturesAvg: Array<number> = [];
     private temperaturesChart = [];
 
     ngOnChanges(changes: SimpleChanges): void {
-        const currentMeasures = <Measure[]> changes.measures.currentValue;
-        const weatherDays: Array<string> = [];
-        if (currentMeasures.length > 0) {
-            this.dates = currentMeasures
-                .map((measure) => moment(measure.date, 'DD-MM-YYYY'));
-            this.temperatures = currentMeasures
-                .map((measure) => Math.round(measure.temperature * 100) / 100);
-            this.dates.forEach(date => {
-                weatherDays.push(date.format('MMMM Do YYYY'));
-            });
-
-            this.temperaturesChart = this.getTemperaturesChart(weatherDays,
-                this.temperatures, this.temperatures, this.temperatures);
+        const currentMeasureInfo = <MeasuresInfo> changes.measureInfo.currentValue;
+        if (currentMeasureInfo) {
+            this.temperaturesMax = currentMeasureInfo.temperatureStatistics
+                .map((temperatureStatistics) => Math.round(temperatureStatistics.max * 100) / 100);
+            this.temperaturesMin = currentMeasureInfo.temperatureStatistics
+                .map((temperatureStatistics) => Math.round(temperatureStatistics.min * 100) / 100);
+            this.temperaturesAvg = currentMeasureInfo.temperatureStatistics
+                .map((temperatureStatistics) => Math.round(temperatureStatistics.avg * 100) / 100);
+            this.temperaturesChart = this.getTemperaturesChart(currentMeasureInfo.dates,
+                this.temperaturesMax, this.temperaturesMin, this.temperaturesAvg);
 
         }
     }
