@@ -1,9 +1,9 @@
 package com.asierg.sensehat.controller;
 
-import com.asierg.sensehat.domain.Measure;
 import com.asierg.sensehat.services.EnvironmentSensorAdapter;
 import com.asierg.sensehat.services.MeasureService;
-import com.asierg.sensehat.services.dto.MeasureDTO;
+import com.asierg.sensehat.services.dto.Measure;
+import com.asierg.sensehat.services.dto.MeasuresInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -29,31 +29,39 @@ public class MeasureController {
   }
 
   @GetMapping({"/measure"})
-  public Measure measure() {
+  public com.asierg.sensehat.domain.Measure measure() {
     return environmentSensorAdapter.getMeasure();
   }
 
   @GetMapping(path = {"/measure/{id}"})
-  public Measure findOne(@PathVariable("id") long id) {
+  public com.asierg.sensehat.domain.Measure findOne(@PathVariable("id") long id) {
     return measureService.findById(id);
   }
 
   @PutMapping({"/updateMeasure"})
-  public ResponseEntity<Measure> updateMeasure(@RequestBody MeasureDTO measureDTO) {
-    log.debug("REST request to update Measure a : {}", measureDTO);
-    Measure updatedMeasure = measureService.updateMeasure(measureDTO);
+  public ResponseEntity<com.asierg.sensehat.domain.Measure> updateMeasure(@RequestBody Measure measure) {
+    log.debug("REST request to update Measure a : {}", measure);
+    com.asierg.sensehat.domain.Measure updatedMeasure = measureService.updateMeasure(measure);
     return ResponseEntity.ok().body(updatedMeasure);
   }
 
   @GetMapping({"", "/"})
-  public List<Measure> listMeasures() {
+  public List<com.asierg.sensehat.domain.Measure> listMeasures() {
     return this.measureService.getAllMeasures();
   }
 
+//  @GetMapping({"/measures/{from}/{to}"})
+//  public List<Measure> getMeasuresBetweenDates(
+//      @PathVariable("from") @DateTimeFormat(pattern = "dd-MM-yyyy_HH:mm:ss") LocalDateTime from,
+//      @PathVariable("to") @DateTimeFormat(pattern = "dd-MM-yyyy_HH:mm:ss") LocalDateTime to) {
+//    return this.measureService.getMeasuresBetweenDates(from, to);
+//  }
+
   @GetMapping({"/measures/{from}/{to}"})
-  public List<Measure> getMeasuresBetweenDates(
-      @PathVariable("from") @DateTimeFormat(pattern = "dd-MM-yyyy_HH:mm:ss") LocalDateTime from,
-      @PathVariable("to") @DateTimeFormat(pattern = "dd-MM-yyyy_HH:mm:ss") LocalDateTime to) {
+  public MeasuresInfo getMeasuresBetweenDates(
+          @PathVariable("from") @DateTimeFormat(pattern = "dd-MM-yyyy_HH:mm:ss") LocalDateTime from,
+          @PathVariable("to") @DateTimeFormat(pattern = "dd-MM-yyyy_HH:mm:ss") LocalDateTime to) {
     return this.measureService.getMeasuresBetweenDates(from, to);
   }
+
 }

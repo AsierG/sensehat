@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {Measure} from '../measure.model';
+import {Measure} from '../models/measure.model';
 import {Chart} from 'chart.js';
 import * as moment from 'moment';
 import {Moment} from 'moment';

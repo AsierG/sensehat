@@ -3,8 +3,9 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import * as moment from 'moment';
 import {SearchForm} from "./searchForm.model";
 import {MeasuresService} from "../../../services/measures.service";
-import {Measure} from "../measure.model";
+import {Measure} from "../models/measure.model";
 import {DateUtils} from "../../shared/date-utils.component";
+import {MeasuresInfo} from "../models/measuresInfo.model";
 
 const now: moment.Moment = moment();
 const nowMinusOneWeek: moment.Moment = moment().subtract(7, 'd');
@@ -17,10 +18,11 @@ export class MeasuresSearchComponent {
 
     searchForm: FormGroup;
     measures: Measure[] = [];
+    measureInfo: MeasuresInfo;
 
     constructor(private measuresService: MeasuresService) {
 
-        let search: SearchForm = new SearchForm(nowMinusOneWeek, now);
+        const search: SearchForm = new SearchForm(nowMinusOneWeek, now);
         this.searchForm = new FormGroup({
             'from': new FormControl(null),
             'timeFrom': new FormControl(null),
@@ -48,9 +50,9 @@ export class MeasuresSearchComponent {
         this.searchForm.valueChanges
             .subscribe(data => {
                 if (this.searchForm.valid) {
-                    let from: moment.Moment = DateUtils.getMoment(this.searchForm.controls['from'].value,
+                    const from: moment.Moment = DateUtils.getMoment(this.searchForm.controls['from'].value,
                         this.searchForm.controls['timeFrom'].value);
-                    let to: moment.Moment = DateUtils.getMoment(this.searchForm.controls['to'].value,
+                    const to: moment.Moment = DateUtils.getMoment(this.searchForm.controls['to'].value,
                         this.searchForm.controls['timeTo'].value);
                     this.getMeasures(from, to);
                 } else {
@@ -63,9 +65,10 @@ export class MeasuresSearchComponent {
     getMeasures(from: moment.Moment, to: moment.Moment) {
         this.measuresService.getMeasuresBetweenDates(from, to)
             .subscribe(
-                (measures: Measure[]) => {
-                    this.measures = measures;
-                    console.log(this.measures.length);
+                (measureInfo: MeasuresInfo) => {
+                    this.measureInfo = measureInfo;
+                    this.measures = this.measureInfo.measures;
+                    console.log(this.measureInfo);
                 },
                 (error) => console.log(error)
             );
@@ -73,18 +76,18 @@ export class MeasuresSearchComponent {
 
     notValidDates(): { [s: string]: boolean } {
 
-        let form: any = this;
+        const form: any = this;
 
         if (form.controls['from'].value && form.controls['to'].value
             && form.controls['timeFrom'].value && form.controls['timeTo'].value) {
-            let fromMoment: moment.Moment = DateUtils.getMoment(form.controls['from'].value,
+            const fromMoment: moment.Moment = DateUtils.getMoment(form.controls['from'].value,
                 form.controls['timeFrom'].value);
-            let toMoment: moment.Moment = DateUtils.getMoment(form.controls['to'].value,
+            const toMoment: moment.Moment = DateUtils.getMoment(form.controls['to'].value,
                 form.controls['timeTo'].value);
             if (toMoment.isBefore(fromMoment)) {
                 return {
                     notValidDates: true
-                }
+                };
             } else {
                 return null;
             }

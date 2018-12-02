@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class StatisticsDTO {
+public class Statistics {
 
   private double max;
   private double min;

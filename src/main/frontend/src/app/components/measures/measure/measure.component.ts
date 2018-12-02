@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {MeasuresService} from "../../../services/measures.service";
-import {Measure} from "../measure.model";
+import {Measure} from "../models/measure.model";
 import {NgForm} from "@angular/forms";
 
 

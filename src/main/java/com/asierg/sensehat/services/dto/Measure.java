@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MeasureDTO {
+public class Measure {
 
   private long id;
   private double temperature;

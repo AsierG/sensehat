@@ -1,10 +1,9 @@
 package com.asierg.sensehat.services;
 
-import com.asierg.sensehat.domain.Measure;
 import com.asierg.sensehat.repositories.MeasureRepository;
-import com.asierg.sensehat.services.dto.MeasureDTO;
-import com.asierg.sensehat.services.dto.MeasuresInfoDTO;
-import com.asierg.sensehat.services.dto.StatisticsDTO;
+import com.asierg.sensehat.services.dto.Measure;
+import com.asierg.sensehat.services.dto.MeasuresInfo;
+import com.asierg.sensehat.services.dto.Statistics;
 import com.asierg.sensehat.utils.FunctionUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,8 +11,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
@@ -37,31 +34,31 @@ public class MeasureServiceImpl implements MeasureService {
 
   //    @Scheduled(initialDelay = 1000, fixedRate = 10000)
   public void scheduledTask() {
-    Measure measure = environmentSensorAdapter.getMeasure();
-    Measure savedMeasure = measureRepository.save(measure);
+    com.asierg.sensehat.domain.Measure measure = environmentSensorAdapter.getMeasure();
+    com.asierg.sensehat.domain.Measure savedMeasure = measureRepository.save(measure);
     log.info("saved measure {}", savedMeasure);
   }
 
-  public List<Measure> getAllMeasures() {
+  public List<com.asierg.sensehat.domain.Measure> getAllMeasures() {
     return measureRepository.findAllByOrderByDateAsc();
   }
 
   @Override
-  public List<Measure> getMeasuresBetweenDates(LocalDateTime from, LocalDateTime to) {
-    List<Measure> measureList = measureRepository.getAllByDateIsBetweenOrderByDateAsc(from, to);
-    MeasuresInfoDTO measuresInfoDTO = getMeasuresInfoFromMeasures(measureList);
-    return measureList;
+  public MeasuresInfo getMeasuresBetweenDates(LocalDateTime from, LocalDateTime to) {
+    List<com.asierg.sensehat.domain.Measure> measureList = measureRepository.getAllByDateIsBetweenOrderByDateAsc(from, to);
+    return getMeasuresInfoFromMeasures(measureList);
+//    return measures;
   }
 
-  private MeasuresInfoDTO getMeasuresInfoFromMeasures(List<Measure> measureList) {
-    List<MeasureDTO> measureDTOList = objectMapperService.mapAll(measureList, MeasureDTO.class);
-    MeasuresInfoDTO measuresInfoDTO =
-        MeasuresInfoDTO.builder().measureDTOList(measureDTOList).build();
-    Map<Integer, List<Measure>> dateMeasureMap =
-        measureList.stream().collect(FunctionUtils.sortedGroupingBy(Measure::getYearMonthDay));
-    List<StatisticsDTO> temperatureStatistics = new ArrayList<>();
-    List<StatisticsDTO> humidityStatistics = new ArrayList<>();
-    List<StatisticsDTO> pressureStatistics = new ArrayList<>();
+  private MeasuresInfo getMeasuresInfoFromMeasures(List<com.asierg.sensehat.domain.Measure> measureList) {
+    List<Measure> measureDTOList = objectMapperService.mapAll(measureList, Measure.class);
+    MeasuresInfo measuresInfo =
+        MeasuresInfo.builder().measures(measureDTOList).build();
+    Map<Integer, List<com.asierg.sensehat.domain.Measure>> dateMeasureMap =
+        measureList.stream().collect(FunctionUtils.sortedGroupingBy(com.asierg.sensehat.domain.Measure::getYearMonthDay));
+    List<Statistics> temperatureStatistics = new ArrayList<>();
+    List<Statistics> humidityStatistics = new ArrayList<>();
+    List<Statistics> pressureStatistics = new ArrayList<>();
     List<String> dates = new ArrayList<>();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     dateMeasureMap.forEach(
@@ -71,25 +68,25 @@ public class MeasureServiceImpl implements MeasureService {
           humidityStatistics.add(getStatisticDTOBuild(getHumidityStatistics(measures)));
           pressureStatistics.add(getStatisticDTOBuild(getPressureStatistics(measures)));
         });
-    measuresInfoDTO.setDates(dates);
-    measuresInfoDTO.setTemperatureStatistics(temperatureStatistics);
-    measuresInfoDTO.setHumidityStatistics(humidityStatistics);
-    measuresInfoDTO.setPressureStatistics(pressureStatistics);
-    return measuresInfoDTO;
+    measuresInfo.setDates(dates);
+    measuresInfo.setTemperatureStatistics(temperatureStatistics);
+    measuresInfo.setHumidityStatistics(humidityStatistics);
+    measuresInfo.setPressureStatistics(pressureStatistics);
+    return measuresInfo;
   }
 
-  private StatisticsDTO getStatisticDTOBuild(DoubleSummaryStatistics summaryStatistics) {
-    return StatisticsDTO.builder()
+  private Statistics getStatisticDTOBuild(DoubleSummaryStatistics summaryStatistics) {
+    return Statistics.builder()
         .max(summaryStatistics.getMax())
         .min(summaryStatistics.getMin())
         .avg(summaryStatistics.getAverage())
         .build();
   }
 
-  private DoubleSummaryStatistics getTemperatureStatistics(List<Measure> measures) {
+  private DoubleSummaryStatistics getTemperatureStatistics(List<com.asierg.sensehat.domain.Measure> measures) {
     return measures
         .stream()
-        .map(Measure::getTemperature)
+        .map(com.asierg.sensehat.domain.Measure::getTemperature)
         .collect(Collectors.toList())
         .stream()
         .collect(
@@ -98,10 +95,10 @@ public class MeasureServiceImpl implements MeasureService {
             DoubleSummaryStatistics::combine);
   }
 
-  private DoubleSummaryStatistics getHumidityStatistics(List<Measure> measures) {
+  private DoubleSummaryStatistics getHumidityStatistics(List<com.asierg.sensehat.domain.Measure> measures) {
     return measures
         .stream()
-        .map(Measure::getHumidity)
+        .map(com.asierg.sensehat.domain.Measure::getHumidity)
         .collect(Collectors.toList())
         .stream()
         .collect(
@@ -110,10 +107,10 @@ public class MeasureServiceImpl implements MeasureService {
             DoubleSummaryStatistics::combine);
   }
 
-  private DoubleSummaryStatistics getPressureStatistics(List<Measure> measures) {
+  private DoubleSummaryStatistics getPressureStatistics(List<com.asierg.sensehat.domain.Measure> measures) {
     return measures
         .stream()
-        .map(Measure::getPressure)
+        .map(com.asierg.sensehat.domain.Measure::getPressure)
         .collect(Collectors.toList())
         .stream()
         .collect(
@@ -123,18 +120,18 @@ public class MeasureServiceImpl implements MeasureService {
   }
 
   @Override
-  public Measure saveMeasure(Measure measure) {
+  public com.asierg.sensehat.domain.Measure saveMeasure(com.asierg.sensehat.domain.Measure measure) {
     return measureRepository.save(measure);
   }
 
   @Override
-  public Measure findById(Long id) {
+  public com.asierg.sensehat.domain.Measure findById(Long id) {
     return measureRepository.findOne(id);
   }
 
   @Override
-  public Measure updateMeasure(MeasureDTO measureDTO) {
-    Measure measure = measureRepository.findOne(measureDTO.getId());
+  public com.asierg.sensehat.domain.Measure updateMeasure(Measure measureDTO) {
+    com.asierg.sensehat.domain.Measure measure = measureRepository.findOne(measureDTO.getId());
     measure.setPressure(measureDTO.getPressure());
     measure.setHumidity(measureDTO.getHumidity());
     measure.setTemperature(measureDTO.getTemperature());
