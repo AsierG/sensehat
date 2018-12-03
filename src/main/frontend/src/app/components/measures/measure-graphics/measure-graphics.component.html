@@ -1,5 +1,17 @@
-<div [hidden]="!temperaturesChart">
-    <canvas id="canvas">
+<div [hidden]="!temperaturesChart" class="row">
+    <canvas id="temperatureCanvas">
         {{ temperaturesChart }}
+    </canvas>
+</div>
+
+<div [hidden]="!pressureChart" class="row">
+    <canvas id="pressureCanvas">
+        {{ pressureChart }}
+    </canvas>
+</div>
+
+<div [hidden]="!humidityChart" class="row">
+    <canvas id="humidityCanvas">
+        {{ humidityChart }}
     </canvas>
 </div>

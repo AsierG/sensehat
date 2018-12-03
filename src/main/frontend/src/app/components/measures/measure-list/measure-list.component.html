@@ -1,26 +1,27 @@
-<table class="table table-hover">
-    <thead>
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">Temperature</th>
-        <th scope="col">Pressure</th>
-        <th scope="col">Date</th>
-        <th scope="col">Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let measure of measures">
-        <th scope="row">{{measure.id}}</th>
-        <td>{{measure.temperature | number:'2.2-2' : 'es'}}</td>
-        <td>{{measure.pressure | number:'3.1-2' : 'es'}}</td>
-        <td>{{measure.date}}</td>
-        <td>
-            <button (click)="editMeasure(measure.id)"
-                    type="button" class="btn btn-outline-primary btn-block">
-                Edit
-            </button>
-        </td>
-    </tr>
-    </tbody>
-</table>
-
+<div class="row">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Temperature</th>
+            <th scope="col">Pressure</th>
+            <th scope="col">Date</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let measure of measures">
+            <th scope="row">{{measure.id}}</th>
+            <td>{{measure.temperature | number:'2.2-2' : 'es'}}</td>
+            <td>{{measure.pressure | number:'3.1-2' : 'es'}}</td>
+            <td>{{measure.date}}</td>
+            <td>
+                <button (click)="editMeasure(measure.id)"
+                        type="button" class="btn btn-outline-primary btn-block">
+                    Edit
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
