@@ -1,6 +1,5 @@
-<div class="row" *ngIf="temperaturesChart">
+<div [hidden]="!temperaturesChart">
     <canvas id="canvas">
-        {{temperaturesChart}}
+        {{ temperaturesChart }}
     </canvas>
 </div>
-
