@@ -1,0 +1,29 @@
+profile:
+  message: This is a DEFAULT profile
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: error
+        type:
+          descriptor:
+            sql:
+              BasicBinder: warn
+
+spring:
+  h2:
+    console:
+      enabled: true
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+        format_sql: true
+        ddl-auto: create-drop
+
+
+
+

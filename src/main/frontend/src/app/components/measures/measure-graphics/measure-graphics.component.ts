@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Chart} from 'chart.js';
 import {MeasuresInfo} from "../models/measuresInfo.model";
 
@@ -9,16 +9,24 @@ import {MeasuresInfo} from "../models/measuresInfo.model";
     templateUrl: './measure-graphics.component.html',
     styleUrls: ['./measure-graphics.component.css']
 })
-export class MeasureGraphicsComponent implements OnChanges {
+export class MeasureGraphicsComponent implements OnChanges, OnInit {
 
     @Input() measureInfo: MeasuresInfo;
 
-    private temperaturesChart = [];
-    private pressureChart = [];
-    private humidityChart = [];
+    public temperaturesChart = [];
+    public pressureChart = [];
+    public humidityChart = [];
+
+    public charts: string[] = ['Temperature', 'Pressure', 'Humidity'];
+    public selectedChart: string;
+
+    ngOnInit(): void {
+        this.selectedChart = this.charts[0];
+    }
+
 
     ngOnChanges(changes: SimpleChanges): void {
-        const currentMeasureInfo = <MeasuresInfo> changes.measureInfo.currentValue;
+        const currentMeasureInfo = <MeasuresInfo>changes.measureInfo.currentValue;
         if (currentMeasureInfo) {
             this.createTemperaturesChart(currentMeasureInfo);
             this.createPressureChart(currentMeasureInfo);
@@ -34,7 +42,7 @@ export class MeasureGraphicsComponent implements OnChanges {
         const temperaturesAvg: Array<number> = currentMeasureInfo.temperatureStatistics
             .map((temperatureStatistics) => Math.round(temperatureStatistics.avg * 100) / 100);
         this.temperaturesChart = this.getTemperaturesChart('Temperatures', 'temperatureCanvas', currentMeasureInfo.dates,
-            temperaturesMax, temperaturesMin, temperaturesAvg);
+            temperaturesMin, temperaturesAvg, temperaturesMax);
     }
 
     private createPressureChart(currentMeasureInfo) {
@@ -45,7 +53,7 @@ export class MeasureGraphicsComponent implements OnChanges {
         const pressureAvg: Array<number> = currentMeasureInfo.pressureStatistics
             .map((pressureStatistics) => Math.round(pressureStatistics.avg * 100) / 100);
         this.pressureChart = this.getTemperaturesChart('Pressure', 'pressureCanvas', currentMeasureInfo.dates,
-            pressureMax, pressureMin, pressureAvg);
+            pressureMin, pressureAvg, pressureMax);
     }
 
     private createHumidityChart(currentMeasureInfo) {
@@ -56,35 +64,36 @@ export class MeasureGraphicsComponent implements OnChanges {
         const humidityAvg: Array<number> = currentMeasureInfo.humidityStatistics
             .map((humidityStatistics) => Math.round(humidityStatistics.avg * 100) / 100);
         this.humidityChart = this.getTemperaturesChart('Humidity', 'humidityCanvas', currentMeasureInfo.dates,
-            humidityMax, humidityMin, humidityAvg);
+            humidityMin, humidityAvg, humidityMax);
     }
 
     private getTemperaturesChart(title: string, canvas: string,
                                  weatherDays: Array<string>,
-                                 maxValues: Array<number>,
-                                 meanValues: Array<number>,
-                                 minValues: Array<number>) {
+                                 minValues: Array<number>,
+                                 avgValues: Array<number>,
+                                 maxValues: Array<number>
+    ) {
         return new Chart(canvas, {
             type: 'bar',
             data: {
                 labels: weatherDays,
                 datasets: [
                     {
-                        label: 'Max',
-                        data: maxValues,
-                        backgroundColor: '#F78181',
+                        label: 'Min',
+                        data: minValues,
+                        backgroundColor: '#2E9AFE',
                         fill: false
                     },
                     {
                         label: 'Avg',
-                        data: meanValues,
+                        data: avgValues,
                         backgroundColor: '#04B45F',
                         fill: false
                     },
                     {
-                        label: 'Min',
-                        data: minValues,
-                        backgroundColor: '#2E9AFE',
+                        label: 'Max',
+                        data: maxValues,
+                        backgroundColor: '#F78181',
                         fill: false
                     }
                 ]
@@ -134,4 +143,5 @@ export class MeasureGraphicsComponent implements OnChanges {
             }
         });
     }
+
 }

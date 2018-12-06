@@ -1,16 +1,29 @@
-<div [hidden]="!temperaturesChart" class="row">
+<div class="form-group row">
+    <div class="col-sm-12 form-inline">
+        <label class="col-form-label col-sm-1">Chart:</label>
+        <div class="form-group col-sm-4">
+            <div class="input-group">
+                <select id="selectChart" class="form-control" [(ngModel)]="selectedChart">
+                    <option *ngFor="let chart of charts" [ngValue]="chart">
+                        {{chart}}
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div [hidden]="selectedChart !== 'Temperature'" class="row">
     <canvas id="temperatureCanvas">
         {{ temperaturesChart }}
     </canvas>
 </div>
-
-<div [hidden]="!pressureChart" class="row">
+<div [hidden]="selectedChart !== 'Pressure'" class="row">
     <canvas id="pressureCanvas">
         {{ pressureChart }}
     </canvas>
 </div>
-
-<div [hidden]="!humidityChart" class="row">
+<div [hidden]="selectedChart !== 'Humidity'" class="row">
     <canvas id="humidityCanvas">
         {{ humidityChart }}
     </canvas>

@@ -4,13 +4,18 @@ import com.asierg.sensehat.domain.Measure;
 import com.asierg.sensehat.services.EnvironmentSensorAdapter;
 import com.asierg.sensehat.services.MeasureService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
@@ -31,23 +36,16 @@ public class SensehatApplication {
   @Bean
   @Profile("default")
   CommandLineRunner runner(MeasureService measureService) {
-    final LocalDate[] startLocalDate = {LocalDate.of(2018, 8, 25)};
+
     return args -> {
-      IntStream.rangeClosed(1, 100)
-          .forEach(
-              i -> {
-                Measure measure = environmentSensorAdapter.getMeasure();
-                startLocalDate[0] = startLocalDate[0].plusDays(1);
-                int minHour = 0;
-                int maxHour = 23;
-                int randomHour = ThreadLocalRandom.current().nextInt(minHour, maxHour);
-                int min = 0;
-                int max = 59;
-                int randomMinute = ThreadLocalRandom.current().nextInt(min, max);
-                int randomSecond = ThreadLocalRandom.current().nextInt(min, max);
-                measure.setDate(startLocalDate[0].atTime(randomHour, randomMinute, randomSecond));
-                measureService.saveMeasure(measure);
-              });
+      LocalDateTime startDateTime = LocalDateTime.of(2018, Month.DECEMBER, 1, 0, 0);
+      LocalDateTime endDateTime = LocalDateTime.of(2018, Month.DECEMBER, 31, 23, 0);
+      while (startDateTime.isBefore(endDateTime)) {
+        startDateTime = startDateTime.plusMinutes(15);
+        Measure measure = environmentSensorAdapter.getMeasure();
+        measure.setDate(startDateTime);
+        measureService.saveMeasure(measure);
+      }
     };
   }
 }

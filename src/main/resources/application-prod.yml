@@ -1,0 +1,6 @@
+profile:
+  message: This is a PROD profile
+
+management:
+  security:
+    enabled: false

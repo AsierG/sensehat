@@ -47,7 +47,6 @@ public class MeasureServiceImpl implements MeasureService {
   public MeasuresInfo getMeasuresBetweenDates(LocalDateTime from, LocalDateTime to) {
     List<com.asierg.sensehat.domain.Measure> measureList = measureRepository.getAllByDateIsBetweenOrderByDateAsc(from, to);
     return getMeasuresInfoFromMeasures(measureList);
-//    return measures;
   }
 
   private MeasuresInfo getMeasuresInfoFromMeasures(List<com.asierg.sensehat.domain.Measure> measureList) {
