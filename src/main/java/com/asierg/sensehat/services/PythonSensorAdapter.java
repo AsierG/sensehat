@@ -1,12 +1,14 @@
 package com.asierg.sensehat.services;
 
 import com.asierg.sensehat.domain.Measure;
+import com.asierg.sensehat.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import okio.Okio;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 @Slf4j
 @Service
@@ -59,7 +61,23 @@ public class PythonSensorAdapter implements EnvironmentSensorAdapter {
 
   @Override
   public Measure getMeasure() {
-    return null;
+    double humidity = getHumidity();
+    double pressure = getPressure();
+    double temperatureFromHumidity = getTemperatureFromHumidity();
+    double temperatureFromPressure = getTemperatureFromPressure();
+    double temperatureFromCpu = getTemperatureFromCpu();
+    double tempTemperature = (temperatureFromHumidity + temperatureFromPressure) / 2;
+    LocalDateTime dateTime = LocalDateTime.now();
+    return Measure.builder()
+            .temperatureFromHumidity(temperatureFromHumidity)
+            .temperatureFromPressure(temperatureFromPressure)
+            .temperatureFromCpu(temperatureFromCpu)
+            .temperature(tempTemperature)
+            .pressure(pressure)
+            .humidity(humidity)
+            .date(dateTime)
+            .yearMonthDay(DateUtils.localDateTimeToYearMonthDayIntegerFormatDate(dateTime))
+            .build();
   }
 
   private String execPythonCode(String pythonCode, String line) {
