@@ -1,4 +1,4 @@
-import {NgbDateStruct, NgbTimeStruct} from "@ng-bootstrap/ng-bootstrap";
+import {NgbDateStruct, NgbTimeStruct} from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 
 export class DateUtils {
@@ -9,13 +9,13 @@ export class DateUtils {
     }
 
     static getDateAsString(momentDate: moment.Moment): string {
-        let year: string = DateUtils.normalizeToString(momentDate.year());
-        let month: string = DateUtils.normalizeToString(momentDate.month() + 1);
-        let day: string = DateUtils.normalizeToString(momentDate.date());
+        const year: string = DateUtils.normalizeToString(momentDate.year());
+        const month: string = DateUtils.normalizeToString(momentDate.month() + 1);
+        const day: string = DateUtils.normalizeToString(momentDate.date());
 
-        let hour: string = DateUtils.normalizeToString(momentDate.hour());
-        let minute: string = DateUtils.normalizeToString(momentDate.minute());
-        let second: string = DateUtils.normalizeToString(momentDate.second());
+        const hour: string = DateUtils.normalizeToString(momentDate.hour());
+        const minute: string = DateUtils.normalizeToString(momentDate.minute());
+        const second: string = DateUtils.normalizeToString(momentDate.second());
 
         return `${day}-${month}-${year}_${hour}:${minute}:${second}`;
     }

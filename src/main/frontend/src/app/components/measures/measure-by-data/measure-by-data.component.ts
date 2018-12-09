@@ -1,14 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
-import {Measure} from "../models/measure.model";
-import {MeasuresService} from "../../../services/measures.service";
+import {Component} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
+import {Measure} from '../models/measure.model';
+import {MeasuresService} from '../../../services/measures.service';
 
 @Component({
     selector: 'app-measure-by-data',
     templateUrl: './measure-by-data.component.html'
 })
-export class MeasureByDataComponent implements OnInit {
+export class MeasureByDataComponent {
 
     measure: Measure;
     measureForm: FormGroup;
@@ -18,13 +18,11 @@ export class MeasureByDataComponent implements OnInit {
                 private measuresService: MeasuresService) {
 
         this.measureForm = new FormGroup({
-
             'id': new FormControl(null),
             'temperatureFromHumidity': new FormControl(null),
             'temperatureFromCpu': new FormControl(null),
             'temperatureFromPressure': new FormControl(null),
             'date': new FormControl(null),
-
             'temperature': new FormControl(null,
                 [Validators.required,
                     Validators.min(-10),
@@ -41,8 +39,6 @@ export class MeasureByDataComponent implements OnInit {
                     Validators.max(1100)
                 ])
         });
-
-
         this.activatedRoute.params.subscribe(params => {
             return this.measuresService.getMeasure(params['id'])
                 .subscribe(
@@ -53,11 +49,6 @@ export class MeasureByDataComponent implements OnInit {
                     (error) => console.log(error)
                 );
         });
-
-
-    }
-
-    ngOnInit() {
     }
 
     update(measureForm: NgForm) {
@@ -67,6 +58,5 @@ export class MeasureByDataComponent implements OnInit {
             });
         this.router.navigate(['/home']);
     }
-
 
 }

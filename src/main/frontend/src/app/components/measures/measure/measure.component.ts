@@ -1,21 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {MeasuresService} from "../../../services/measures.service";
-import {Measure} from "../models/measure.model";
-import {NgForm} from "@angular/forms";
-
+import {Component} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {MeasuresService} from '../../../services/measures.service';
+import {Measure} from '../models/measure.model';
 
 @Component({
     selector: 'app-measure',
     templateUrl: './measure.component.html'
 })
-export class MeasureComponent implements OnInit {
+export class MeasureComponent {
 
     measure: Measure;
 
     constructor(private activatedRoute: ActivatedRoute,
                 private measuresService: MeasuresService) {
-
         this.activatedRoute.params.subscribe(params => {
             return this.measuresService.getMeasure(params['id'])
                 .subscribe(
@@ -25,24 +22,13 @@ export class MeasureComponent implements OnInit {
                     (error) => console.log(error)
                 );
         });
-
     }
 
-    ngOnInit() {
-    }
-
-    update(measureForm: NgForm) {
-        console.log("measureForm Value: " + measureForm.value);
-        console.log("measure: " + this.measure);
-
+    update() {
         this.measuresService.updateMeasure(this.measure)
             .subscribe(updatedMeasure => {
-                // alert("Measure updated successfully.");
                 console.log('updatedMeasure ' + updatedMeasure);
             });
-
     }
-
-
 
 }

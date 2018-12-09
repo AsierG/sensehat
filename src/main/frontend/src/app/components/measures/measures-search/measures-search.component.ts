@@ -1,11 +1,10 @@
-import {Component, EventEmitter, Output} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Component} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import * as moment from 'moment';
-import {SearchForm} from "./searchForm.model";
-import {MeasuresService} from "../../../services/measures.service";
-import {Measure} from "../models/measure.model";
-import {DateUtils} from "../../shared/date-utils.component";
-import {MeasuresInfo} from "../models/measuresInfo.model";
+import {SearchForm} from './searchForm.model';
+import {MeasuresService} from '../../../services/measures.service';
+import {DateUtils} from '../../shared/date-utils.component';
+import {MeasuresInfo} from '../models/measuresInfo.model';
 
 const now: moment.Moment = moment();
 const nowMinusOneWeek: moment.Moment = moment().subtract(7, 'd');
@@ -18,6 +17,8 @@ export class MeasuresSearchComponent {
 
     searchForm: FormGroup;
     measureInfo: MeasuresInfo;
+    spinnersFrom = true;
+    spinnersTo = true;
 
     constructor(private measuresService: MeasuresService) {
 
@@ -65,16 +66,13 @@ export class MeasuresSearchComponent {
             .subscribe(
                 (measureInfo: MeasuresInfo) => {
                     this.measureInfo = measureInfo;
-                    console.log(this.measureInfo);
                 },
                 (error) => console.log(error)
             );
     }
 
     notValidDates(): { [s: string]: boolean } {
-
         const form: any = this;
-
         if (form.controls['from'].value && form.controls['to'].value
             && form.controls['timeFrom'].value && form.controls['timeTo'].value) {
             const fromMoment: moment.Moment = DateUtils.getMoment(form.controls['from'].value,
@@ -91,9 +89,6 @@ export class MeasuresSearchComponent {
         }
         return null;
     }
-
-    spinnersFrom = true;
-    spinnersTo = true;
 
     selectToday() {
         this.searchForm.controls['to'].setValue({year: now.year(), month: now.month() + 1, day: now.date()});

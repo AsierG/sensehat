@@ -1,13 +1,10 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Chart} from 'chart.js';
-import {MeasuresInfo} from "../models/measuresInfo.model";
-
-// import {Moment} from 'moment';
+import {MeasuresInfo} from '../models/measuresInfo.model';
 
 @Component({
     selector: 'app-measure-graphics',
-    templateUrl: './measure-graphics.component.html',
-    styleUrls: ['./measure-graphics.component.css']
+    templateUrl: './measure-graphics.component.html'
 })
 export class MeasureGraphicsComponent implements OnChanges, OnInit {
 

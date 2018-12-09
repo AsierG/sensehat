@@ -1,18 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {MeasuresService} from "../../services/measures.service";
+import {Component} from '@angular/core';
 
 @Component({
     selector: 'app-home',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.css']
+    templateUrl: './home.component.html'
 })
-export class HomeComponent implements OnInit {
-
-    constructor(private measuresService: MeasuresService) {
-
-    }
-
-    ngOnInit() {
-    }
-
+export class HomeComponent {
 }
