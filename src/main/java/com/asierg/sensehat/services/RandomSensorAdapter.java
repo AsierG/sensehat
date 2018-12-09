@@ -1,6 +1,7 @@
 package com.asierg.sensehat.services;
 
 import com.asierg.sensehat.domain.Measure;
+import com.asierg.sensehat.utils.DateUtils;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +48,7 @@ public class RandomSensorAdapter implements EnvironmentSensorAdapter {
     double temperatureFromCpu = getTemperatureFromCpu();
     double tempTemperature = (temperatureFromHumidity + temperatureFromPressure) / 2;
     double temperature = temperatureFromCpu - ((temperatureFromCpu - tempTemperature) / 1.5);
+    LocalDateTime dateTime = LocalDateTime.now();
     return Measure.builder()
         .temperatureFromHumidity(temperatureFromHumidity)
         .temperatureFromPressure(temperatureFromPressure)
@@ -54,7 +56,8 @@ public class RandomSensorAdapter implements EnvironmentSensorAdapter {
         .temperature(temperature)
         .pressure(pressure)
         .humidity(humidity)
-        .date(LocalDateTime.now())
+        .date(dateTime)
+        .yearMonthDay(DateUtils.localDateTimeToYearMonthDayIntegerFormatDate(dateTime))
         .build();
   }
 }
