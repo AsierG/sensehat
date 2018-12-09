@@ -46,9 +46,8 @@ public class MeasureController {
 
   @GetMapping({"/measures/{from}/{to}"})
   public MeasuresInfo getMeasuresBetweenDates(
-          @PathVariable("from") @DateTimeFormat(pattern = "dd-MM-yyyy_HH:mm:ss") LocalDateTime from,
-          @PathVariable("to") @DateTimeFormat(pattern = "dd-MM-yyyy_HH:mm:ss") LocalDateTime to) {
+      @PathVariable("from") @DateTimeFormat(pattern = "dd-MM-yyyy_HH:mm:ss") LocalDateTime from,
+      @PathVariable("to") @DateTimeFormat(pattern = "dd-MM-yyyy_HH:mm:ss") LocalDateTime to) {
     return this.measureService.getMeasuresBetweenDates(from, to);
   }
-
 }

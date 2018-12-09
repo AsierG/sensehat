@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(indexes = { @Index(name = "IDX_DATE", columnList = "date") })
+@Table(indexes = {@Index(name = "IDX_DATE", columnList = "date")})
 public class Measure {
 
   @Id

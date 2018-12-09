@@ -10,7 +10,7 @@ import java.util.List;
 @Builder
 public class MeasuresInfo {
 
-  private List<Measure> measures = new ArrayList<>();
+  @Builder.Default private List<Measure> measures = new ArrayList<>();
   private List<String> dates;
   private List<Statistics> temperatureStatistics;
   private List<Statistics> pressureStatistics;

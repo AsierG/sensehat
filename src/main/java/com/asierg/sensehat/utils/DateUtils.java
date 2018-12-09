@@ -4,8 +4,7 @@ import java.time.LocalDateTime;
 
 public class DateUtils {
 
-  public static Integer localDateTimeToYearMonthDayIntegerFormatDate(
-      LocalDateTime localDateTime) {
+  public static Integer localDateTimeToYearMonthDayIntegerFormatDate(LocalDateTime localDateTime) {
     Integer value = null;
     if (localDateTime != null) {
       StringBuilder stringBuilder = new StringBuilder();

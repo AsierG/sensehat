@@ -8,9 +8,8 @@ import java.util.stream.Collectors;
 
 public class FunctionUtils {
 
-    public static <T, K extends Comparable<K>> Collector<T, ?, TreeMap<K, List<T>>> sortedGroupingBy(
-            Function<T, K> function) {
-        return Collectors.groupingBy(function, TreeMap::new, Collectors.toList());
-    }
-
+  public static <T, K extends Comparable<K>> Collector<T, ?, TreeMap<K, List<T>>> sortedGroupingBy(
+      Function<T, K> function) {
+    return Collectors.groupingBy(function, TreeMap::new, Collectors.toList());
+  }
 }

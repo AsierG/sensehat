@@ -54,7 +54,7 @@ public class PythonSensorAdapter implements EnvironmentSensorAdapter {
 
   private String callRaspberryCpuTemperature() {
     return execPythonCode(
-            RASPBERRY_OS_CODE, "print (temp.replace(\"temp=\",\"\").replace(\"'C\\n\",\"\"))");
+        RASPBERRY_OS_CODE, "print (temp.replace(\"temp=\",\"\").replace(\"'C\\n\",\"\"))");
   }
 
   @Override

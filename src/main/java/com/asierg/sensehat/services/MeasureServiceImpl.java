@@ -34,7 +34,7 @@ public class MeasureServiceImpl implements MeasureService {
     this.objectMapperService = objectMapperService;
   }
 
-  @Scheduled(cron = "0 */2 * ? * *")
+  @Scheduled(cron = "0 * * ? * *")
   public void scheduledTask() {
     com.asierg.sensehat.domain.Measure savedMeasure =
         measureRepository.save(environmentSensorAdapter.getMeasure());
