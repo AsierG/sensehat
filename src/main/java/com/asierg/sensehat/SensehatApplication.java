@@ -4,20 +4,14 @@ import com.asierg.sensehat.domain.Measure;
 import com.asierg.sensehat.services.EnvironmentSensorAdapter;
 import com.asierg.sensehat.services.MeasureService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.IntStream;
 
 @SpringBootApplication
 public class SensehatApplication {
@@ -36,7 +30,6 @@ public class SensehatApplication {
   @Bean
   @Profile("default")
   CommandLineRunner runner(MeasureService measureService) {
-
     return args -> {
       LocalDateTime startDateTime = LocalDateTime.of(2018, Month.DECEMBER, 1, 0, 0);
       LocalDateTime endDateTime = LocalDateTime.of(2018, Month.DECEMBER, 31, 23, 0);

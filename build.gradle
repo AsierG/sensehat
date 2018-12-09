@@ -41,10 +41,9 @@ dependencies {
     compile('org.modelmapper:modelmapper:2.3.2')
     runtime('org.springframework.boot:spring-boot-devtools')
     runtime('com.h2database:h2')
+    runtime('org.postgresql:postgresql:42.1.4')
     compileOnly('org.projectlombok:lombok')
     compile('com.squareup.okio:okio:1.13.0')
-
     compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
-
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }

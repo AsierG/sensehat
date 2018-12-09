@@ -4,7 +4,6 @@ import com.asierg.sensehat.services.dto.Measure;
 import com.asierg.sensehat.services.dto.MeasuresInfo;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public interface MeasureService {
 

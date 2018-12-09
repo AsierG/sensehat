@@ -12,12 +12,12 @@ import {AboutComponent} from './components/about/about.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from '@angular/common/http';
-import { ChartsModule } from 'ng2-charts';
+import {ChartsModule} from 'ng2-charts';
 // Services
 import {MeasuresService} from './services/measures.service';
-import { MeasureComponent } from './components/measures/measure/measure.component';
-import { MeasuresSearchComponent } from './components/measures/measures-search/measures-search.component';
-import { MeasureByDataComponent } from './components/measures/measure-by-data/measure-by-data.component';
+import {MeasureComponent} from './components/measures/measure/measure.component';
+import {MeasuresSearchComponent} from './components/measures/measures-search/measures-search.component';
+import {MeasureByDataComponent} from './components/measures/measure-by-data/measure-by-data.component';
 
 @NgModule({
     declarations: [

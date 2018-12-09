@@ -4,3 +4,25 @@ profile:
 management:
   security:
     enabled: false
+
+spring:
+  # Database
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/raspberry?currentSchema=sensehat
+    username: postgres
+    password: postgres
+    initialize: true
+  # JPA properties
+  jpa:
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+        format_sql: true
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+logging:
+  file: sensehat.log

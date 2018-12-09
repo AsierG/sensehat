@@ -6,14 +6,16 @@ import com.asierg.sensehat.services.dto.MeasuresInfo;
 import com.asierg.sensehat.services.dto.Statistics;
 import com.asierg.sensehat.utils.FunctionUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.DoubleSummaryStatistics;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.groupingBy;
 
 @Service
 @Slf4j
@@ -32,10 +34,10 @@ public class MeasureServiceImpl implements MeasureService {
     this.objectMapperService = objectMapperService;
   }
 
-  //    @Scheduled(initialDelay = 1000, fixedRate = 10000)
+  @Scheduled(cron = "0 */2 * ? * *")
   public void scheduledTask() {
-    com.asierg.sensehat.domain.Measure measure = environmentSensorAdapter.getMeasure();
-    com.asierg.sensehat.domain.Measure savedMeasure = measureRepository.save(measure);
+    com.asierg.sensehat.domain.Measure savedMeasure =
+        measureRepository.save(environmentSensorAdapter.getMeasure());
     log.info("saved measure {}", savedMeasure);
   }
 
