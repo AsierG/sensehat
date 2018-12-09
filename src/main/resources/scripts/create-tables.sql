@@ -14,5 +14,5 @@ create table measure (
         temperature_from_pressure float8,
         year_month_day int4 not null,
         primary key (id_countries)
-    )
-create index IDX_DATE on measure (date)
+    );
+create index IDX_DATE on measure (date);
