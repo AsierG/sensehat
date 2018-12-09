@@ -1,5 +1,5 @@
-import {Statistics} from "./statistics.model";
-import {Measure} from "./measure.model";
+import {Statistics} from './statistics.model';
+import {Measure} from './measure.model';
 
 export class MeasuresInfo {
 

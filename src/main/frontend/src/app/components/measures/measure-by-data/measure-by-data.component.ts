@@ -23,6 +23,7 @@ export class MeasureByDataComponent {
             'temperatureFromCpu': new FormControl(null),
             'temperatureFromPressure': new FormControl(null),
             'date': new FormControl(null),
+            // 'yearMonthDay': new FormControl(null),
             'temperature': new FormControl(null,
                 [Validators.required,
                     Validators.min(-10),

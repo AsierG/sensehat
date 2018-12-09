@@ -34,28 +34,16 @@ public class MeasureController {
   }
 
   @GetMapping(path = {"/measure/{id}"})
-  public com.asierg.sensehat.domain.Measure findOne(@PathVariable("id") long id) {
+  public Measure findOne(@PathVariable("id") long id) {
     return measureService.findById(id);
   }
 
   @PutMapping({"/updateMeasure"})
-  public ResponseEntity<com.asierg.sensehat.domain.Measure> updateMeasure(@RequestBody Measure measure) {
+  public ResponseEntity<Measure> updateMeasure(@RequestBody Measure measure) {
     log.debug("REST request to update Measure a : {}", measure);
-    com.asierg.sensehat.domain.Measure updatedMeasure = measureService.updateMeasure(measure);
+    Measure updatedMeasure = measureService.updateMeasure(measure);
     return ResponseEntity.ok().body(updatedMeasure);
   }
-
-  @GetMapping({"", "/"})
-  public List<com.asierg.sensehat.domain.Measure> listMeasures() {
-    return this.measureService.getAllMeasures();
-  }
-
-//  @GetMapping({"/measures/{from}/{to}"})
-//  public List<Measure> getMeasuresBetweenDates(
-//      @PathVariable("from") @DateTimeFormat(pattern = "dd-MM-yyyy_HH:mm:ss") LocalDateTime from,
-//      @PathVariable("to") @DateTimeFormat(pattern = "dd-MM-yyyy_HH:mm:ss") LocalDateTime to) {
-//    return this.measureService.getMeasuresBetweenDates(from, to);
-//  }
 
   @GetMapping({"/measures/{from}/{to}"})
   public MeasuresInfo getMeasuresBetweenDates(

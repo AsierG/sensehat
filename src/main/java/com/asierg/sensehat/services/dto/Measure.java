@@ -18,8 +18,12 @@ public class Measure {
 
   private long id;
   private double temperature;
+  private double temperatureFromHumidity;
+  private double temperatureFromCpu;
+  private double temperatureFromPressure;
   private double pressure;
   private double humidity;
+
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
   @Convert(converter = LocalDateTimeAttributeConverter.class)
   private LocalDateTime date;

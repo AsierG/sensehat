@@ -39,22 +39,23 @@ public class MeasureServiceImpl implements MeasureService {
     log.info("saved measure {}", savedMeasure);
   }
 
-  public List<com.asierg.sensehat.domain.Measure> getAllMeasures() {
-    return measureRepository.findAllByOrderByDateAsc();
-  }
-
   @Override
   public MeasuresInfo getMeasuresBetweenDates(LocalDateTime from, LocalDateTime to) {
-    List<com.asierg.sensehat.domain.Measure> measureList = measureRepository.getAllByDateIsBetweenOrderByDateAsc(from, to);
+    List<com.asierg.sensehat.domain.Measure> measureList =
+        measureRepository.getAllByDateIsBetweenOrderByDateAsc(from, to);
     return getMeasuresInfoFromMeasures(measureList);
   }
 
-  private MeasuresInfo getMeasuresInfoFromMeasures(List<com.asierg.sensehat.domain.Measure> measureList) {
+  private MeasuresInfo getMeasuresInfoFromMeasures(
+      List<com.asierg.sensehat.domain.Measure> measureList) {
     List<Measure> measureDTOList = objectMapperService.mapAll(measureList, Measure.class);
-    MeasuresInfo measuresInfo =
-        MeasuresInfo.builder().measures(measureDTOList).build();
+    MeasuresInfo measuresInfo = MeasuresInfo.builder().measures(measureDTOList).build();
     Map<Integer, List<com.asierg.sensehat.domain.Measure>> dateMeasureMap =
-        measureList.stream().collect(FunctionUtils.sortedGroupingBy(com.asierg.sensehat.domain.Measure::getYearMonthDay));
+        measureList
+            .stream()
+            .collect(
+                FunctionUtils.sortedGroupingBy(
+                    com.asierg.sensehat.domain.Measure::getYearMonthDay));
     List<Statistics> temperatureStatistics = new ArrayList<>();
     List<Statistics> humidityStatistics = new ArrayList<>();
     List<Statistics> pressureStatistics = new ArrayList<>();
@@ -82,7 +83,8 @@ public class MeasureServiceImpl implements MeasureService {
         .build();
   }
 
-  private DoubleSummaryStatistics getTemperatureStatistics(List<com.asierg.sensehat.domain.Measure> measures) {
+  private DoubleSummaryStatistics getTemperatureStatistics(
+      List<com.asierg.sensehat.domain.Measure> measures) {
     return measures
         .stream()
         .map(com.asierg.sensehat.domain.Measure::getTemperature)
@@ -94,7 +96,8 @@ public class MeasureServiceImpl implements MeasureService {
             DoubleSummaryStatistics::combine);
   }
 
-  private DoubleSummaryStatistics getHumidityStatistics(List<com.asierg.sensehat.domain.Measure> measures) {
+  private DoubleSummaryStatistics getHumidityStatistics(
+      List<com.asierg.sensehat.domain.Measure> measures) {
     return measures
         .stream()
         .map(com.asierg.sensehat.domain.Measure::getHumidity)
@@ -106,7 +109,8 @@ public class MeasureServiceImpl implements MeasureService {
             DoubleSummaryStatistics::combine);
   }
 
-  private DoubleSummaryStatistics getPressureStatistics(List<com.asierg.sensehat.domain.Measure> measures) {
+  private DoubleSummaryStatistics getPressureStatistics(
+      List<com.asierg.sensehat.domain.Measure> measures) {
     return measures
         .stream()
         .map(com.asierg.sensehat.domain.Measure::getPressure)
@@ -119,22 +123,22 @@ public class MeasureServiceImpl implements MeasureService {
   }
 
   @Override
-  public com.asierg.sensehat.domain.Measure saveMeasure(com.asierg.sensehat.domain.Measure measure) {
+  public com.asierg.sensehat.domain.Measure saveMeasure(
+      com.asierg.sensehat.domain.Measure measure) {
     return measureRepository.save(measure);
   }
 
   @Override
-  public com.asierg.sensehat.domain.Measure findById(Long id) {
-    return measureRepository.findOne(id);
+  public Measure findById(Long id) {
+    return objectMapperService.map(measureRepository.findOne(id), Measure.class);
   }
 
   @Override
-  public com.asierg.sensehat.domain.Measure updateMeasure(Measure measureDTO) {
+  public Measure updateMeasure(Measure measureDTO) {
     com.asierg.sensehat.domain.Measure measure = measureRepository.findOne(measureDTO.getId());
     measure.setPressure(measureDTO.getPressure());
     measure.setHumidity(measureDTO.getHumidity());
     measure.setTemperature(measureDTO.getTemperature());
-    measureRepository.save(measure);
-    return measure;
+    return objectMapperService.map(measureRepository.save(measure), Measure.class);
   }
 }
