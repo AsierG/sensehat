@@ -13,6 +13,12 @@ import java.io.IOException;
 @Profile("prod")
 public class PythonSensorAdapter implements EnvironmentSensorAdapter {
 
+  private final String SENSEHAT_CODE =
+      "from sense_hat import SenseHat\n" + "sense = SenseHat()\n" + "\n";
+
+  private final String RASPBERRY_OS_CODE =
+      "import os\n" + "temp = os.popen('vcgencmd measure_temp').readline()\n" + "\n";
+
   @Override
   public double getPressure() {
     String rawPressure = callSenseHatGetter("get_pressure");
@@ -39,11 +45,16 @@ public class PythonSensorAdapter implements EnvironmentSensorAdapter {
 
   @Override
   public double getTemperatureFromCpu() {
-    return 0;
+    return Double.parseDouble(callRaspberryCpuTemperature());
   }
 
   private String callSenseHatGetter(String getterName) {
-    return execPythonCode(String.format("print sense.%s()", getterName));
+    return execPythonCode(SENSEHAT_CODE, String.format("print sense.%s()", getterName));
+  }
+
+  private String callRaspberryCpuTemperature() {
+    return execPythonCode(
+            RASPBERRY_OS_CODE, "print (temp.replace(\"temp=\",\"\").replace(\"'C\\n\",\"\"))");
   }
 
   @Override
@@ -51,9 +62,9 @@ public class PythonSensorAdapter implements EnvironmentSensorAdapter {
     return null;
   }
 
-  private String execPythonCode(String line) {
+  private String execPythonCode(String pythonCode, String line) {
 
-    String code = "from sense_hat import SenseHat\n" + "sense = SenseHat()\n" + "\n" + line;
+    String code = pythonCode + line;
     try {
       Process process = Runtime.getRuntime().exec(new String[] {"python", "-c", code});
       int exitCode = process.waitFor();
