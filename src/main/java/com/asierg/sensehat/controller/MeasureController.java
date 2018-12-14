@@ -37,10 +37,11 @@ public class MeasureController {
     return measureService.findById(id);
   }
 
-  @PutMapping({"/updateMeasure"})
-  public ResponseEntity<Measure> updateMeasure(@RequestBody Measure measure) {
+  @PutMapping({"/updateMeasure/{id}"})
+  public ResponseEntity<Measure> updateMeasure(
+      @PathVariable("id") long id, @RequestBody Measure measure) {
     log.debug("REST request to update Measure a : {}", measure);
-    Measure updatedMeasure = measureService.updateMeasure(measure);
+    Measure updatedMeasure = measureService.updateMeasure(id, measure);
     return ResponseEntity.ok().body(updatedMeasure);
   }
 

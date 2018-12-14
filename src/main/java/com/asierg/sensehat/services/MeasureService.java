@@ -9,9 +9,9 @@ public interface MeasureService {
 
   com.asierg.sensehat.domain.Measure saveMeasure(com.asierg.sensehat.domain.Measure measure);
 
-  Measure findById(Long id);
+  Measure findById(long id);
 
-  Measure updateMeasure(Measure measure);
+  Measure updateMeasure(long id, Measure measure);
 
   MeasuresInfo getMeasuresBetweenDates(LocalDateTime from, LocalDateTime to);
 }

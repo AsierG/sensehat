@@ -69,15 +69,15 @@ public class PythonSensorAdapter implements EnvironmentSensorAdapter {
     double tempTemperature = (temperatureFromHumidity + temperatureFromPressure) / 2;
     LocalDateTime dateTime = LocalDateTime.now();
     return Measure.builder()
-            .temperatureFromHumidity(temperatureFromHumidity)
-            .temperatureFromPressure(temperatureFromPressure)
-            .temperatureFromCpu(temperatureFromCpu)
-            .temperature(tempTemperature)
-            .pressure(pressure)
-            .humidity(humidity)
-            .date(dateTime)
-            .yearMonthDay(DateUtils.localDateTimeToYearMonthDayIntegerFormatDate(dateTime))
-            .build();
+        .temperatureFromHumidity(temperatureFromHumidity)
+        .temperatureFromPressure(temperatureFromPressure)
+        .temperatureFromCpu(temperatureFromCpu)
+        .temperature(tempTemperature)
+        .pressure(pressure)
+        .humidity(humidity)
+        .date(dateTime)
+        .yearMonthDay(DateUtils.localDateTimeToYearMonthDayIntegerFormatDate(dateTime))
+        .build();
   }
 
   private String execPythonCode(String pythonCode, String line) {

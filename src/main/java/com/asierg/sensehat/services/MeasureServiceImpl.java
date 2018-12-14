@@ -131,13 +131,13 @@ public class MeasureServiceImpl implements MeasureService {
   }
 
   @Override
-  public Measure findById(Long id) {
+  public Measure findById(long id) {
     return objectMapperService.map(measureRepository.findOne(id), Measure.class);
   }
 
   @Override
-  public Measure updateMeasure(Measure measureDTO) {
-    com.asierg.sensehat.domain.Measure measure = measureRepository.findOne(measureDTO.getId());
+  public Measure updateMeasure(long id, Measure measureDTO) {
+    com.asierg.sensehat.domain.Measure measure = measureRepository.findOne(id);
     measure.setPressure(measureDTO.getPressure());
     measure.setHumidity(measureDTO.getHumidity());
     measure.setTemperature(measureDTO.getTemperature());

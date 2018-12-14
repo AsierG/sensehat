@@ -26,7 +26,7 @@ export class MeasuresService {
     }
 
     updateMeasure(measure: Measure) {
-        return this.httpClient.put('/api/sensehat/updateMeasure', measure);
+        return this.httpClient.put(`/api/sensehat/updateMeasure/${measure.id}`, measure);
     }
 
 }
