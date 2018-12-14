@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import * as moment from 'moment';
 import {SearchForm} from './searchForm.model';
@@ -13,12 +13,19 @@ const nowMinusOneWeek: moment.Moment = moment().subtract(7, 'd');
     selector: 'app-measures-search',
     templateUrl: './measures-search.component.html'
 })
-export class MeasuresSearchComponent {
+export class MeasuresSearchComponent implements OnInit {
 
     searchForm: FormGroup;
     measureInfo: MeasuresInfo;
     spinnersFrom = true;
     spinnersTo = true;
+
+
+    ngOnInit(): void {
+        if (this.searchForm.valid) {
+            this.searchMeasures();
+        }
+    }
 
     constructor(private measuresService: MeasuresService) {
 
@@ -50,15 +57,19 @@ export class MeasuresSearchComponent {
         this.searchForm.valueChanges
             .subscribe(data => {
                 if (this.searchForm.valid) {
-                    const from: moment.Moment = DateUtils.getMoment(this.searchForm.controls['from'].value,
-                        this.searchForm.controls['timeFrom'].value);
-                    const to: moment.Moment = DateUtils.getMoment(this.searchForm.controls['to'].value,
-                        this.searchForm.controls['timeTo'].value);
-                    this.getMeasures(from, to);
+                    this.searchMeasures();
                 } else {
                     this.measureInfo.measures = [];
                 }
             });
+    }
+
+    private searchMeasures() {
+        const from: moment.Moment = DateUtils.getMoment(this.searchForm.controls['from'].value,
+            this.searchForm.controls['timeFrom'].value);
+        const to: moment.Moment = DateUtils.getMoment(this.searchForm.controls['to'].value,
+            this.searchForm.controls['timeTo'].value);
+        this.getMeasures(from, to);
     }
 
     getMeasures(from: moment.Moment, to: moment.Moment) {
@@ -106,5 +117,6 @@ export class MeasuresSearchComponent {
     search() {
         console.log(this.searchForm);
     }
+
 
 }
